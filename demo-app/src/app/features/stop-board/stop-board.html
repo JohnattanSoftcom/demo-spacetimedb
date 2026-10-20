@@ -1,0 +1,204 @@
+<div class="flex min-h-screen flex-col bg-slate-950 text-white antialiased selection:bg-amber-400/40">
+  <!-- ===================================================== header -->
+  <header class="flex flex-wrap items-center justify-between gap-4 border-b border-white/10 bg-gradient-to-r from-slate-900 to-slate-950 px-6 py-4 md:px-10 md:py-6">
+    <div class="flex min-w-0 items-center gap-4">
+      <div class="grid size-14 shrink-0 place-items-center rounded-xl bg-amber-400 text-3xl font-black text-slate-950 shadow-lg shadow-amber-400/20 md:size-16" aria-hidden="true">
+        H
+      </div>
+      <div class="min-w-0">
+        <p class="text-sm font-semibold uppercase tracking-[0.25em] text-amber-400">TransVille · Arrêt</p>
+        <h1 class="truncate text-3xl font-extrabold leading-tight md:text-5xl">
+          @if (stop(); as s) {
+            {{ s.name }}
+          } @else if (unknownStop()) {
+            Arrêt inconnu
+          } @else {
+            <span class="text-white/40">Chargement…</span>
+          }
+        </h1>
+        @if (servingLines().length) {
+          <div class="mt-2 flex flex-wrap items-center gap-2">
+            <span class="text-sm text-white/50">Lignes</span>
+            @for (l of servingLines(); track l.id) {
+              <span
+                class="rounded-md px-2.5 py-0.5 text-base font-black"
+                [style.background-color]="l.color"
+                [style.color]="l.textColor"
+                [title]="l.name"
+                >{{ l.code }}</span
+              >
+            }
+          </div>
+        }
+      </div>
+    </div>
+    <div class="text-right">
+      <div class="font-mono text-4xl font-bold tabular-nums md:text-6xl" aria-live="off">{{ clock() }}</div>
+      <div class="text-sm capitalize text-white/50 md:text-base">{{ today() }}</div>
+    </div>
+  </header>
+
+  <!-- ===================================================== perturbation banner -->
+  @if (perturbations().length) {
+    <div
+      role="alert"
+      class="flex items-stretch overflow-hidden border-y-2"
+      [class]="bannerCritical() ? 'border-red-400 bg-red-600 text-white' : 'border-amber-300 bg-amber-400 text-slate-950'"
+    >
+      <div
+        class="z-10 flex shrink-0 items-center gap-2 px-4 py-3 text-lg font-black uppercase tracking-wide md:px-6 md:text-2xl"
+        [class]="bannerCritical() ? 'bg-red-800' : 'bg-amber-500'"
+      >
+        <span class="sb-blink" aria-hidden="true">⚠</span> Info trafic
+      </div>
+      <div class="relative min-w-0 flex-1 overflow-hidden py-3">
+        <div class="sb-marquee flex w-max whitespace-nowrap text-lg font-bold md:text-2xl">
+          <span class="px-8">{{ bannerText() }}</span>
+          <span class="px-8" aria-hidden="true">{{ bannerText() }}</span>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- ===================================================== body -->
+  <main class="flex-1 px-4 py-6 md:px-10 md:py-8">
+    @if (stdb.status() === 'error') {
+      <div class="mx-auto mt-16 max-w-xl rounded-2xl border border-red-500/40 bg-red-500/10 p-8 text-center">
+        <p class="text-3xl font-bold">Serveur injoignable</p>
+        @if (stdb.lastError(); as err) {
+          <p class="mt-2 text-white/60">{{ err }}</p>
+        }
+        <button
+          type="button"
+          class="mt-6 rounded-lg bg-white px-5 py-2.5 text-lg font-semibold text-slate-950 hover:bg-white/90"
+          (click)="stdb.retryConnection()"
+        >
+          Réessayer
+        </button>
+      </div>
+    } @else if (unknownStop()) {
+      <div class="mx-auto mt-10 max-w-2xl rounded-2xl border border-white/10 bg-white/5 p-8">
+        <p class="text-3xl font-bold">Arrêt inconnu</p>
+        <p class="mt-2 text-lg text-white/60">
+          L'arrêt « {{ stopId() }} » n'existe pas sur le réseau TransVille. Choisissez un arrêt :
+        </p>
+        <div class="mt-6 grid gap-2 sm:grid-cols-2">
+          @for (s of sortedStops(); track s.id) {
+            <a
+              [routerLink]="['/arret', s.id]"
+              class="rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-lg font-semibold hover:border-amber-400 hover:bg-amber-400/10"
+              >{{ s.name }}</a
+            >
+          }
+        </div>
+        <a routerLink="/" class="mt-6 inline-block text-amber-400 underline-offset-4 hover:underline">← Retour à l'accueil</a>
+      </div>
+    } @else {
+      <div class="overflow-hidden rounded-2xl border border-white/10 bg-slate-900/60 shadow-2xl">
+        <div class="grid grid-cols-[5.5rem_1fr_auto] items-center gap-4 border-b border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold uppercase tracking-widest text-white/50 md:grid-cols-[7rem_1fr_auto] md:px-8">
+          <span>Ligne</span>
+          <span>Direction</span>
+          <span class="text-right">Départ</span>
+        </div>
+
+        @if (loading()) {
+          @for (i of [1, 2, 3, 4]; track i) {
+            <div class="flex items-center gap-4 border-b border-white/5 px-4 py-5 md:px-8">
+              <div class="h-12 w-20 animate-pulse rounded-lg bg-white/10"></div>
+              <div class="h-8 flex-1 animate-pulse rounded bg-white/10"></div>
+              <div class="h-8 w-24 animate-pulse rounded bg-white/10"></div>
+            </div>
+          }
+        } @else {
+          @for (d of departures(); track d.key; let odd = $odd) {
+            <div
+              class="sb-row grid grid-cols-[5.5rem_1fr_auto] items-center gap-4 border-b border-white/5 px-4 py-4 last:border-b-0 md:grid-cols-[7rem_1fr_auto] md:px-8 md:py-5"
+              [style.background-color]="odd ? 'rgba(255,255,255,0.025)' : null"
+            >
+              <span
+                class="grid h-12 w-20 place-items-center rounded-lg text-3xl font-black shadow-md md:h-16 md:w-24 md:text-4xl"
+                [style.background-color]="d.color"
+                [style.color]="d.textColor"
+                [title]="d.line?.name ?? ''"
+                >{{ d.lineCode }}</span
+              >
+              <div class="min-w-0">
+                <div class="truncate text-2xl font-bold md:text-4xl">
+                  <span class="text-white/40">→</span> {{ d.destination }}
+                </div>
+                <div class="mt-1 flex flex-wrap items-center gap-3 text-sm text-white/50 md:text-base">
+                  @if (d.vehicleLabel) {
+                    <span>{{ d.vehicleLabel }}</span>
+                  }
+                  @if (d.lateMinutes) {
+                    <span class="rounded bg-amber-400/15 px-2 py-0.5 font-semibold text-amber-300">
+                      +{{ d.lateMinutes }} min de retard
+                    </span>
+                  }
+                </div>
+              </div>
+              <div class="text-right font-mono text-3xl font-extrabold tabular-nums md:text-5xl">
+                @switch (d.etaKind) {
+                  @case ('disrupted') {
+                    <span class="sb-blink text-2xl text-amber-400 md:text-4xl">Perturbé</span>
+                  }
+                  @case ('dock') {
+                    <span class="text-emerald-400">À quai</span>
+                  }
+                  @case ('near') {
+                    <span class="sb-blink text-2xl text-emerald-300 md:text-4xl">À l'approche</span>
+                  }
+                  @default {
+                    <span>{{ d.eta }}</span>
+                  }
+                }
+              </div>
+            </div>
+          } @empty {
+            <div class="px-8 py-16 text-center text-2xl text-white/50">
+              Aucun départ dans les 30 prochaines minutes
+            </div>
+          }
+        }
+      </div>
+      @if (paused()) {
+        <p class="mt-4 text-center text-lg font-semibold text-amber-300">Exploitation momentanément suspendue</p>
+      }
+    }
+  </main>
+
+  <!-- ===================================================== footer -->
+  <footer class="flex flex-wrap items-center justify-between gap-3 border-t border-white/10 bg-slate-900/80 px-6 py-3 text-sm text-white/60 md:px-10">
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center gap-2">
+        <span class="relative flex size-2.5">
+          <span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60"></span>
+          <span class="relative inline-flex size-2.5 rounded-full bg-emerald-400"></span>
+        </span>
+        Données temps réel — propulsé par <strong class="text-white/80">SpacetimeDB</strong>
+      </span>
+      @if (speedFactor() > 1) {
+        <span class="rounded bg-white/10 px-2 py-0.5 text-xs">Simulation ×{{ speedFactor() }}</span>
+      }
+    </div>
+    <div class="flex items-center gap-3">
+      <label class="flex items-center gap-2">
+        <span class="sr-only md:not-sr-only">Changer d'arrêt</span>
+        <select
+          class="rounded-md border border-white/15 bg-slate-800 px-2 py-1 text-white focus:border-amber-400 focus:outline-none"
+          [value]="stop()?.id ?? ''"
+          (change)="switchStop($any($event.target).value)"
+        >
+          @if (!stop()) {
+            <option value="" disabled>— Choisir —</option>
+          }
+          @for (s of sortedStops(); track s.id) {
+            <option [value]="s.id" [selected]="s.id === stop()?.id">{{ s.name }}</option>
+          }
+        </select>
+      </label>
+      <a routerLink="/" class="hover:text-white">Accueil</a>
+      <app-connection-badge [dark]="true" [showIdentity]="false" />
+    </div>
+  </footer>
+</div>

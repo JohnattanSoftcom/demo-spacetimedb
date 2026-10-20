@@ -1,0 +1,157 @@
+<div class="min-h-[calc(100vh-3rem)] bg-slate-50">
+  <!-- Hero -->
+  <section class="bg-gradient-to-br from-slate-900 via-slate-800 to-red-900 text-white">
+    <div class="mx-auto max-w-6xl px-4 py-12 sm:py-16">
+      <p class="text-sm font-medium tracking-widest text-red-300 uppercase">Démo SpacetimeDB · Opérateur fictif</p>
+      <h1 class="mt-2 text-4xl font-extrabold tracking-tight sm:text-5xl">TransVille Live</h1>
+      <p class="mt-3 max-w-2xl text-lg text-white/80">Centre d'exploitation temps réel — démo SpacetimeDB</p>
+      <p class="mt-4 max-w-3xl text-white/70">
+        Un réseau de bus fictif sur la géographie réelle de Fribourg : le poste de commande centralisé (PCC), l'application
+        chauffeur et les bornes d'arrêt partagent la même base de données. Toute la logique métier — simulation des bus,
+        incidents, escalades, autorisations, audit — tourne <strong class="text-white">dans SpacetimeDB</strong>, sans
+        serveur d'application ni API intermédiaire.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-3 text-sm">
+        <span class="rounded-full bg-white/10 px-3 py-1">{{ stdb.lines().length }} lignes</span>
+        <span class="rounded-full bg-white/10 px-3 py-1">{{ stdb.stops().length }} arrêts</span>
+        <span class="rounded-full bg-white/10 px-3 py-1">{{ stdb.vehicles().length }} véhicules</span>
+        @if (stdb.simConfig(); as sim) {
+          <span class="rounded-full bg-white/10 px-3 py-1">
+            Simulation ×{{ sim.speedFactor }} {{ sim.paused ? '· en pause' : '· en cours' }}
+          </span>
+        }
+      </div>
+    </div>
+  </section>
+
+  <div class="mx-auto max-w-6xl space-y-10 px-4 py-10">
+    <!-- Tip -->
+    <div class="flex gap-3 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+      <span aria-hidden="true">💡</span>
+      <p>
+        Ouvrez chaque écran dans un <strong>onglet séparé</strong> (les liens ci-dessous ouvrent un nouvel onglet ; pas
+        « Dupliquer l'onglet »). Chaque onglet reçoit sa propre identité, comme un appareil différent. Code d'accès
+        superviseur de la démo :
+        <code class="rounded bg-amber-200 px-1.5 py-0.5 font-mono font-bold">{{ supervisorCode }}</code>
+      </p>
+    </div>
+
+    <!-- Screens -->
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Trois écrans, une seule base</h2>
+      <div class="mt-5 grid gap-5 md:grid-cols-3">
+        @for (card of cards; track card.path) {
+          <article class="flex flex-col rounded-xl bg-white p-5 shadow-sm ring-1 ring-slate-200">
+            <div class="text-3xl" aria-hidden="true">{{ card.icon }}</div>
+            <h3 class="mt-3 text-lg font-bold text-slate-900">{{ card.title }}</h3>
+            <p class="text-xs font-medium tracking-wide text-slate-500 uppercase">{{ card.audience }}</p>
+            <p class="mt-3 text-sm text-slate-600">{{ card.text }}</p>
+            <ul class="mt-3 space-y-1 text-sm text-slate-700">
+              @for (p of card.points; track p) {
+                <li class="flex gap-2"><span class="text-emerald-600">✓</span>{{ p }}</li>
+              }
+            </ul>
+            <div class="mt-auto pt-5">
+              @if (card.path === '/arret') {
+                <label class="block text-sm font-medium text-slate-700" for="stop-picker">Choisir un arrêt</label>
+                <select
+                  id="stop-picker"
+                  class="mt-1 w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm"
+                  [value]="selectedStopId() ?? ''"
+                  (change)="onStopChange($any($event.target).value)"
+                  [disabled]="stopOptions().length === 0"
+                >
+                  @for (s of stopOptions(); track s.id) {
+                    <option [value]="s.id" [selected]="s.id === selectedStopId()">{{ s.name }}</option>
+                  } @empty {
+                    <option value="">Chargement des arrêts…</option>
+                  }
+                </select>
+                @if (selectedStop(); as stop) {
+                  <div class="mt-2 flex flex-wrap gap-1">
+                    @for (l of stop.lines; track l.id) {
+                      <span class="rounded px-1.5 py-0.5 text-xs font-bold text-white" [style.background]="l.color"
+                        >{{ l.code }}</span
+                      >
+                    }
+                  </div>
+                  <a
+                    class="mt-3 block rounded-lg bg-slate-900 px-4 py-2 text-center font-semibold text-white hover:bg-slate-700"
+                    [href]="'/arret/' + stop.id"
+                    target="_blank"
+                    rel="noopener"
+                    >Ouvrir la borne ↗</a
+                  >
+                }
+              } @else {
+                <a
+                  class="block rounded-lg bg-red-600 px-4 py-2 text-center font-semibold text-white hover:bg-red-700"
+                  [href]="card.path"
+                  target="_blank"
+                  rel="noopener"
+                  >Ouvrir dans un nouvel onglet ↗</a
+                >
+              }
+            </div>
+          </article>
+        }
+      </div>
+    </section>
+
+    <!-- Network -->
+    @if (lines().length) {
+      <section>
+        <h2 class="text-2xl font-bold text-slate-900">Le réseau</h2>
+        <div class="mt-4 grid gap-3 md:grid-cols-3">
+          @for (l of lines(); track l.id) {
+            <div class="flex items-center gap-3 rounded-lg bg-white p-3 shadow-sm ring-1 ring-slate-200">
+              <span class="grid size-9 shrink-0 place-items-center rounded-md font-bold text-white" [style.background]="l.color">
+                {{ l.code }}
+              </span>
+              <div class="min-w-0">
+                <p class="truncate font-semibold text-slate-900">{{ l.name }}</p>
+                <p class="text-xs text-slate-500">{{ stdb.routeByLineId().get(l.id)?.length ?? 0 }} arrêts</p>
+              </div>
+            </div>
+          }
+        </div>
+      </section>
+    }
+
+    <!-- Features -->
+    <section>
+      <h2 class="text-2xl font-bold text-slate-900">Ce que montre la démo</h2>
+      <p class="mt-1 text-slate-600">Chaque fonctionnalité de SpacetimeDB répond à un besoin métier concret.</p>
+      <div class="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        @for (f of features; track f.feature) {
+          <div class="rounded-lg bg-white p-4 shadow-sm ring-1 ring-slate-200">
+            <p class="font-semibold text-slate-900">{{ f.feature }}</p>
+            <p class="mt-0.5 text-xs font-medium text-red-700">{{ f.where }}</p>
+            <p class="mt-2 text-sm text-slate-600">{{ f.argument }}</p>
+          </div>
+        }
+      </div>
+    </section>
+
+    <!-- Scenario -->
+    <section class="rounded-xl bg-slate-900 p-6 text-white">
+      <h2 class="text-xl font-bold">Scénario de démonstration</h2>
+      <ol class="mt-3 list-decimal space-y-1.5 pl-5 text-sm text-white/80">
+        <li>Ouvrez la supervision et connectez-vous avec le code <code class="font-mono">{{ supervisorCode }}</code>.</li>
+        <li>Ouvrez deux onglets chauffeur, prenez chacun un bus — essayez de prendre le même : un seul gagne.</li>
+        <li>Ouvrez la borne « Fribourg, Gare » : les départs se mettent à jour à chaque seconde.</li>
+        <li>Le chauffeur signale une panne : l'alerte apparaît partout, la borne affiche une perturbation.</li>
+        <li>Ne prenez pas l'incident en charge pendant 30 s : il est escaladé automatiquement.</li>
+        <li>Envoyez un message au chauffeur : lui seul le reçoit ; l'accusé de lecture remonte au PCC.</li>
+      </ol>
+      @if (stdb.status() === 'error') {
+        <div class="mt-4 flex items-center gap-3 rounded-md bg-red-600/20 p-3 text-sm">
+          <span>Serveur injoignable — lancez <code class="font-mono">spacetime start</code>.</span>
+          <button type="button" class="rounded bg-white/20 px-2 py-1 hover:bg-white/30" (click)="stdb.retryConnection()">
+            Réessayer
+          </button>
+        </div>
+      }
+    </section>
+  </div>
+</div>

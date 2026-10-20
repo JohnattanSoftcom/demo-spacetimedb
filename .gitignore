@@ -1,0 +1,11 @@
+# Module C# SpacetimeDB : sorties de build
+spacetimedb/bin/
+spacetimedb/obj/
+
+# Configuration SpacetimeDB propre à chaque développeur
+spacetime.local.json
+
+# Systèmes et éditeurs
+.DS_Store
+Thumbs.db
+.idea/

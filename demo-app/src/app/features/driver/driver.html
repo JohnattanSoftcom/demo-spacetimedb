@@ -1,0 +1,601 @@
+<div class="flex min-h-[calc(100vh-3rem)] justify-center bg-gradient-to-br from-slate-200 via-slate-100 to-slate-300 sm:py-6">
+  <!-- Phone frame (full width on a real phone, framed on desktop) -->
+  <div
+    class="relative flex h-[calc(100vh-3rem)] w-full max-w-sm flex-col overflow-hidden bg-slate-50 sm:h-[min(840px,calc(100vh-6rem))] sm:rounded-[2.5rem] sm:border-[10px] sm:border-slate-900 sm:shadow-2xl"
+  >
+    <!-- Fake status bar -->
+    <div class="flex items-center justify-between bg-slate-900 px-5 pt-1.5 pb-1 text-[11px] font-semibold text-white">
+      <span class="tabular-nums">{{ clock() }}</span>
+      <span class="hidden h-4 w-20 rounded-full bg-black sm:block" aria-hidden="true"></span>
+      <span class="flex items-center gap-1">
+        <span
+          class="size-1.5 rounded-full"
+          [class]="stdb.isConnected() ? 'bg-emerald-400' : 'bg-amber-400 animate-pulse'"
+        ></span>
+        {{ stdb.isConnected() ? 'Réseau' : 'Hors ligne' }}
+      </span>
+    </div>
+
+    <!-- App header -->
+    <header class="flex items-center gap-2 bg-slate-900 px-4 pb-3 text-white">
+      <span class="grid size-8 place-items-center rounded-lg bg-red-600 text-xs font-bold">TV</span>
+      <div class="min-w-0 flex-1">
+        <p class="text-sm leading-tight font-bold">Poste chauffeur</p>
+        <p class="truncate text-[11px] text-white/60">
+          @if (stdb.isDriver() && stdb.me(); as me) {
+            {{ me.name }}
+          } @else {
+            TransVille Live
+          }
+        </p>
+      </div>
+      @if (step() === 2) {
+        <span class="rounded-full bg-emerald-500/20 px-2 py-0.5 text-[11px] font-semibold text-emerald-300">
+          ● En service
+        </span>
+      }
+    </header>
+
+    @if (!isSupervisorTab() && stdb.status() !== 'error' && ready()) {
+      <!-- Stepper -->
+      <ol class="flex items-center gap-1 border-b border-slate-200 bg-white px-4 py-2 text-[11px]">
+        @for (s of steps; track s; let i = $index) {
+          <li class="flex flex-1 items-center gap-1.5" [class.text-slate-400]="i > step()">
+            <span
+              class="grid size-5 shrink-0 place-items-center rounded-full font-bold"
+              [class]="
+                i < step()
+                  ? 'bg-emerald-500 text-white'
+                  : i === step()
+                    ? 'bg-slate-900 text-white'
+                    : 'bg-slate-200 text-slate-500'
+              "
+              >{{ i < step() ? '✓' : i + 1 }}</span
+            >
+            <span class="truncate font-medium">{{ s }}</span>
+          </li>
+        }
+      </ol>
+    }
+
+    <!-- Scrollable content -->
+    <div class="flex-1 overflow-y-auto">
+      @if (stdb.status() === 'error') {
+        <div class="flex h-full flex-col items-center justify-center gap-3 p-8 text-center">
+          <span class="text-4xl">📡</span>
+          <p class="text-lg font-bold text-slate-900">Serveur injoignable</p>
+          <p class="text-sm text-slate-500">{{ stdb.lastError() }}</p>
+          <button
+            type="button"
+            class="rounded-xl bg-slate-900 px-5 py-2.5 text-sm font-semibold text-white"
+            (click)="stdb.retryConnection()"
+          >
+            Réessayer
+          </button>
+        </div>
+      } @else if (!ready()) {
+        <div class="flex h-full flex-col items-center justify-center gap-3 p-8 text-slate-500">
+          <span class="size-8 animate-spin rounded-full border-4 border-slate-300 border-t-slate-900"></span>
+          <p class="text-sm">Connexion au réseau TransVille…</p>
+        </div>
+      } @else if (isSupervisorTab()) {
+        <!-- Role-conflict guard -->
+        <div class="flex h-full flex-col items-center justify-center gap-4 p-8 text-center">
+          <span class="grid size-14 place-items-center rounded-2xl bg-amber-100 text-3xl">⚠️</span>
+          <p class="font-bold text-slate-900">Cet onglet est connecté comme superviseur.</p>
+          <p class="text-sm text-slate-600">
+            Ouvrez le poste chauffeur avec une nouvelle identité. Une identité SpacetimeDB porte un seul rôle, vérifié
+            côté serveur.
+          </p>
+          <button
+            type="button"
+            class="rounded-xl bg-slate-900 px-5 py-3 text-sm font-semibold text-white hover:bg-slate-800"
+            (click)="stdb.newIdentity()"
+          >
+            Nouvelle identité
+          </button>
+          <a routerLink="/supervision" class="text-sm text-blue-700 underline">Retour à la supervision</a>
+        </div>
+      } @else if (step() === 0) {
+        <!-- STEP 1: register -->
+        <form class="flex flex-col gap-5 p-5" (submit)="register($event)">
+          <div class="pt-4 text-center">
+            <span class="mx-auto grid size-16 place-items-center rounded-2xl bg-slate-900 text-3xl">🚌</span>
+            <h1 class="mt-3 text-xl font-bold text-slate-900">Prise de service</h1>
+            <p class="mt-1 text-sm text-slate-500">Identifiez-vous pour choisir votre véhicule.</p>
+          </div>
+          <label class="flex flex-col gap-1.5">
+            <span class="text-sm font-semibold text-slate-700">Votre nom</span>
+            <input
+              type="text"
+              autocomplete="off"
+              maxlength="40"
+              placeholder="ex. Paul Morel"
+              class="rounded-xl border border-slate-300 bg-white px-4 py-3 text-base outline-none focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10"
+              [value]="nameDraft()"
+              (input)="onInput($event.target, nameDraft)"
+            />
+            <span class="text-xs text-slate-400">2 à 40 caractères. Votre rôle « Chauffeur » est enregistré côté serveur.</span>
+          </label>
+          @if (inlineError(); as err) {
+            <p class="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800" role="alert">{{ err }}</p>
+          }
+          <button
+            type="submit"
+            class="rounded-xl bg-red-600 py-3.5 text-base font-bold text-white shadow-sm transition hover:bg-red-700 disabled:cursor-not-allowed disabled:opacity-40"
+            [disabled]="!nameValid() || busy() !== null || !stdb.isConnected()"
+          >
+            {{ busy() === 'register' ? 'Enregistrement…' : 'Commencer mon service' }}
+          </button>
+          @if (editingName()) {
+            <button type="button" class="text-sm text-slate-500 underline" (click)="editingName.set(false)">
+              Annuler
+            </button>
+          }
+          <p class="rounded-xl bg-slate-100 p-3 text-xs leading-relaxed text-slate-500">
+            Démo : chaque onglet a sa propre identité (jeton en <em>sessionStorage</em>). Ouvrez plusieurs onglets pour
+            simuler plusieurs chauffeurs.
+          </p>
+        </form>
+      } @else if (step() === 1) {
+        <!-- STEP 2: pick a vehicle -->
+        <div class="flex flex-col gap-4 p-4">
+          <div class="flex items-end justify-between">
+            <div>
+              <h1 class="text-lg font-bold text-slate-900">Choisissez votre véhicule</h1>
+              <p class="text-xs text-slate-500">{{ freeCount() }} véhicule(s) disponible(s) · mis à jour en direct</p>
+            </div>
+            <button type="button" class="text-xs text-slate-500 underline" (click)="editingName.set(true)">
+              Changer de nom
+            </button>
+          </div>
+
+          @if (inlineError(); as err) {
+            <div class="flex gap-2 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-800" role="alert">
+              <span>⛔</span>
+              <div>
+                <p class="font-semibold">Refusé par le serveur</p>
+                <p>{{ err }}</p>
+              </div>
+            </div>
+          }
+
+          @for (g of vehicleGroups(); track g.lineId) {
+            <section>
+              <h2 class="mb-2 flex items-center gap-2 text-xs font-semibold tracking-wide text-slate-500 uppercase">
+                <span
+                  class="grid h-5 min-w-7 place-items-center rounded px-1 text-[11px] font-bold text-white"
+                  [style.background]="g.line?.color ?? '#475569'"
+                  >{{ g.line?.code }}</span
+                >
+                {{ g.line?.name }}
+              </h2>
+              <ul class="flex flex-col gap-2">
+                @for (row of g.vehicles; track row.vehicle.id) {
+                  <li
+                    class="flex items-center gap-3 rounded-2xl border bg-white p-3 shadow-sm transition"
+                    [class]="row.takenBy ? 'border-slate-200 opacity-60' : 'border-slate-200 hover:border-slate-400'"
+                  >
+                    <span
+                      class="grid size-11 shrink-0 place-items-center rounded-xl text-lg text-white"
+                      [style.background]="row.takenBy ? '#94a3b8' : (g.line?.color ?? '#475569')"
+                      >🚌</span
+                    >
+                    <div class="min-w-0 flex-1">
+                      <p class="font-semibold text-slate-900">{{ row.vehicle.label }}</p>
+                      <p class="truncate text-xs text-slate-500">
+                        {{ row.vehicle.model }}
+                        @if (row.nextStop) {
+                          · vers {{ row.nextStop }}
+                        }
+                      </p>
+                      @if (row.takenBy) {
+                        <p class="mt-0.5 text-xs font-medium text-slate-600">🔒 Pris par {{ row.takenBy }}</p>
+                      }
+                    </div>
+                    <button
+                      type="button"
+                      class="shrink-0 rounded-xl px-3 py-2 text-sm font-semibold transition disabled:cursor-not-allowed"
+                      [class]="
+                        row.takenBy
+                          ? 'bg-slate-100 text-slate-400'
+                          : 'bg-slate-900 text-white hover:bg-slate-700 disabled:opacity-50'
+                      "
+                      [disabled]="!!row.takenBy || busy() !== null || !stdb.isConnected()"
+                      (click)="claim(row.vehicle)"
+                    >
+                      @if (row.takenBy) {
+                        Indisponible
+                      } @else if (busy() === 'claim-' + row.vehicle.id) {
+                        Réservation…
+                      } @else {
+                        Prendre
+                      }
+                    </button>
+                  </li>
+                }
+              </ul>
+            </section>
+          }
+          <p class="rounded-xl bg-blue-50 p-3 text-xs leading-relaxed text-blue-900">
+            <strong>Transaction atomique :</strong> si deux chauffeurs prennent le même bus au même instant, le serveur
+            n'en accepte qu'un. L'autre reçoit un refus explicite.
+          </p>
+        </div>
+      } @else {
+        <!-- STEP 3: in service -->
+        @if (tab() === 'drive') {
+          <div class="flex flex-col gap-3 p-4">
+            <!-- Unread message banner -->
+            @if (latestUnread(); as m) {
+              <button
+                type="button"
+                class="flex items-center gap-3 rounded-2xl bg-blue-600 p-3 text-left text-white shadow-lg"
+                [class.drv-fresh]="freshIds().has(m.id)"
+                (click)="tab.set('messages')"
+              >
+                <span class="text-2xl">✉️</span>
+                <span class="min-w-0 flex-1">
+                  <span class="block text-xs font-semibold text-blue-100">
+                    {{ unread() }} message(s) du PCC non lu(s)
+                  </span>
+                  <span class="block truncate text-sm font-semibold">{{ m.body }}</span>
+                </span>
+                <span class="text-xs font-semibold underline">Lire</span>
+              </button>
+            }
+
+            <!-- Vehicle / line card -->
+            <section
+              class="overflow-hidden rounded-3xl text-white shadow-lg"
+              [style.background]="line()?.color ?? '#334155'"
+            >
+              <div class="bg-black/15 p-4">
+                <div class="flex items-center gap-2 text-sm font-semibold">
+                  <span class="rounded-md bg-white px-2 py-0.5 text-base font-black" [style.color]="line()?.color">
+                    {{ line()?.code }}
+                  </span>
+                  <span>Ligne {{ line()?.code }}</span>
+                  <span class="ml-auto text-xs font-medium opacity-80">{{ vehicle()?.model }}</span>
+                </div>
+                <p class="mt-2 text-3xl leading-tight font-black">{{ vehicle()?.label }}</p>
+                <p class="text-sm font-medium opacity-90">→ Direction {{ destination() ?? '…' }}</p>
+              </div>
+              <div class="grid grid-cols-2 gap-px bg-black/10">
+                <div class="bg-white p-3 text-slate-900">
+                  <p class="text-[11px] font-semibold tracking-wide text-slate-500 uppercase">Prochain arrêt</p>
+                  <p class="text-base leading-tight font-bold">{{ nextStop()?.name ?? '—' }}</p>
+                </div>
+                <div class="bg-white p-3 text-slate-900">
+                  <p class="text-[11px] font-semibold tracking-wide text-slate-500 uppercase">Horaire</p>
+                  @if (position(); as p) {
+                    <span
+                      class="mt-0.5 inline-block rounded-full px-2.5 py-0.5 text-sm font-bold"
+                      [class]="delayClass(p.delaySeconds)"
+                      >{{ formatDelay(p.delaySeconds) }}</span
+                    >
+                  } @else {
+                    <p class="font-bold">—</p>
+                  }
+                </div>
+              </div>
+            </section>
+
+            <!-- Status -->
+            @if (position(); as p) {
+              <div
+                class="flex items-center gap-2 rounded-2xl border px-3 py-2 text-sm"
+                [class]="
+                  p.status.tag === 'Immobilized'
+                    ? 'border-red-300 bg-red-50 text-red-800'
+                    : 'border-slate-200 bg-white text-slate-700'
+                "
+              >
+                <span
+                  class="size-2.5 rounded-full"
+                  [class]="
+                    p.status.tag === 'Immobilized'
+                      ? 'bg-red-500 animate-pulse'
+                      : p.status.tag === 'EnRoute'
+                        ? 'bg-emerald-500'
+                        : 'bg-amber-500'
+                  "
+                ></span>
+                <span class="font-semibold">{{ vehicleStatusLabels[p.status.tag] }}</span>
+                <span class="ml-auto text-xs text-slate-400">
+                  Simulation ×{{ stdb.simConfig()?.speedFactor ?? 1 }}{{ stdb.simConfig()?.paused ? ' · en pause' : '' }}
+                </span>
+              </div>
+            }
+
+            <!-- Route strip -->
+            <section class="rounded-2xl border border-slate-200 bg-white p-3">
+              <p class="mb-2 text-[11px] font-semibold tracking-wide text-slate-500 uppercase">Parcours</p>
+              <ol class="flex flex-col">
+                @for (s of routeStrip(); track s.id; let last = $last) {
+                  <li class="flex items-stretch gap-3">
+                    <span class="flex w-4 flex-col items-center">
+                      <span
+                        class="mt-1 shrink-0 rounded-full border-2"
+                        [class]="
+                          s.state === 'next'
+                            ? 'size-4 animate-pulse'
+                            : s.state === 'passed'
+                              ? 'size-3 border-slate-300 bg-slate-300'
+                              : 'size-3 bg-white'
+                        "
+                        [style.border-color]="s.state === 'passed' ? null : line()?.color"
+                        [style.background]="s.state === 'next' ? line()?.color : null"
+                      ></span>
+                      @if (!last) {
+                        <span
+                          class="w-0.5 flex-1"
+                          [style.background]="s.state === 'passed' ? '#cbd5e1' : line()?.color"
+                        ></span>
+                      }
+                    </span>
+                    <span
+                      class="pb-2 text-sm"
+                      [class]="
+                        s.state === 'next'
+                          ? 'font-bold text-slate-900'
+                          : s.state === 'passed'
+                            ? 'text-slate-400'
+                            : 'text-slate-700'
+                      "
+                    >
+                      {{ s.name }}
+                      @if (s.state === 'next') {
+                        <span class="ml-1 rounded bg-slate-900 px-1.5 py-0.5 text-[10px] font-semibold text-white"
+                          >prochain</span
+                        >
+                      }
+                    </span>
+                  </li>
+                }
+              </ol>
+            </section>
+
+            <!-- Incidents on this bus -->
+            @if (vehicleIncidents().length || myIncidents().length) {
+              <section class="rounded-2xl border border-slate-200 bg-white p-3">
+                <p class="mb-2 text-[11px] font-semibold tracking-wide text-slate-500 uppercase">Mes signalements</p>
+                <ul class="flex flex-col gap-2">
+                  @for (i of myIncidents(); track i.id) {
+                    <li class="rounded-xl border border-slate-100 bg-slate-50 p-2.5">
+                      <div class="flex items-center gap-2">
+                        <span class="font-semibold text-slate-900">{{ kindLabels[i.kind.tag] }}</span>
+                        <span class="rounded-full px-2 py-0.5 text-[10px] font-semibold" [class]="severityClasses[i.severity.tag]">
+                          {{ severityLabels[i.severity.tag] }}
+                        </span>
+                        @if (i.escalations > 0) {
+                          <span class="rounded-full bg-red-600 px-2 py-0.5 text-[10px] font-semibold text-white"
+                            >Escaladé ×{{ i.escalations }}</span
+                          >
+                        }
+                        <span class="ml-auto text-[11px] text-slate-400">{{ age(i) }}</span>
+                      </div>
+                      <div class="mt-1 flex items-center gap-2 text-xs">
+                        <span class="rounded-full px-2 py-0.5 font-semibold" [class]="statusChip(i)">
+                          {{ statusLabels[i.status.tag] }}
+                        </span>
+                        @if (i.status.tag !== 'Open' && i.assigneeName) {
+                          <span class="text-slate-600">par {{ i.assigneeName }}</span>
+                        } @else if (i.status.tag === 'Open') {
+                          <span class="text-slate-500">En attente du PCC…</span>
+                        }
+                      </div>
+                    </li>
+                  }
+                  @for (i of vehicleIncidents(); track i.id) {
+                    @if (!i.reportedBy.isEqual(stdb.identity()!)) {
+                      <li class="rounded-xl border border-amber-200 bg-amber-50 p-2.5 text-xs text-amber-900">
+                        <strong>{{ kindLabels[i.kind.tag] }}</strong> signalé sur votre véhicule par
+                        {{ i.reporterName }} · {{ statusLabels[i.status.tag] }}
+                      </li>
+                    }
+                  }
+                </ul>
+              </section>
+            }
+
+            <!-- End of shift -->
+            <section class="mt-1 pb-2">
+              @if (!confirmRelease()) {
+                <button
+                  type="button"
+                  class="w-full rounded-2xl border border-slate-300 bg-white py-3 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                  (click)="confirmRelease.set(true)"
+                >
+                  Libérer le véhicule · fin de service
+                </button>
+              } @else {
+                <div class="rounded-2xl border border-slate-300 bg-white p-3 text-center">
+                  <p class="text-sm font-semibold text-slate-800">Libérer le {{ vehicle()?.label }} ?</p>
+                  <p class="text-xs text-slate-500">Le véhicule redevient disponible pour un autre chauffeur.</p>
+                  <div class="mt-3 grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      class="rounded-xl bg-slate-100 py-2.5 text-sm font-semibold text-slate-700"
+                      (click)="confirmRelease.set(false)"
+                    >
+                      Annuler
+                    </button>
+                    <button
+                      type="button"
+                      class="rounded-xl bg-slate-900 py-2.5 text-sm font-semibold text-white disabled:opacity-50"
+                      [disabled]="busy() !== null || !stdb.isConnected()"
+                      (click)="release()"
+                    >
+                      {{ busy() === 'release' ? 'Libération…' : 'Confirmer' }}
+                    </button>
+                  </div>
+                </div>
+              }
+              @if (inlineError(); as err) {
+                <p class="mt-2 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800" role="alert">
+                  {{ err }}
+                </p>
+              }
+            </section>
+          </div>
+        } @else if (tab() === 'report') {
+          <!-- Report an incident -->
+          <div class="flex flex-col gap-3 p-4">
+            <div>
+              <h1 class="text-lg font-bold text-slate-900">Signaler un incident</h1>
+              <p class="text-xs text-slate-500">
+                {{ vehicle()?.label }} · ligne {{ line()?.code }} — position GPS jointe automatiquement.
+              </p>
+            </div>
+            <div class="grid grid-cols-2 gap-2.5">
+              @for (k of kindButtons; track k.tag; let last = $last) {
+                <button
+                  type="button"
+                  class="flex flex-col items-start gap-1 rounded-2xl border-2 p-3.5 text-left transition active:scale-95"
+                  [class]="
+                    k.classes +
+                    (selectedKind() === k.tag ? ' ring-4 ring-slate-900/80' : '') +
+                    (last ? ' col-span-2' : '')
+                  "
+                  [attr.aria-pressed]="selectedKind() === k.tag"
+                  (click)="selectKind(k.tag)"
+                >
+                  <span class="text-3xl">{{ k.icon }}</span>
+                  <span class="text-base font-bold">{{ k.label }}</span>
+                  <span class="text-[11px] opacity-75">{{ k.hint }}</span>
+                </button>
+              }
+            </div>
+
+            @if (selectedKind(); as kind) {
+              <div class="flex flex-col gap-2 rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+                <label class="flex flex-col gap-1">
+                  <span class="text-sm font-semibold text-slate-700">
+                    Précisions (facultatif) — {{ kindLabels[kind] }}
+                  </span>
+                  <textarea
+                    rows="3"
+                    maxlength="280"
+                    placeholder="ex. Pneu crevé, véhicule à l'arrêt devant la gare"
+                    class="resize-none rounded-xl border border-slate-300 px-3 py-2 text-sm outline-none focus:border-slate-900"
+                    [value]="description()"
+                    (input)="onInput($event.target, description)"
+                  ></textarea>
+                  <span class="flex justify-between text-[11px] text-slate-400">
+                    <span>⚠ Visible publiquement : pas de données personnelles.</span>
+                    <span class="tabular-nums">{{ description().length }}/280</span>
+                  </span>
+                </label>
+                @if (inlineError(); as err) {
+                  <p class="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800" role="alert">
+                    {{ err }}
+                  </p>
+                }
+                <button
+                  type="button"
+                  class="rounded-xl bg-red-600 py-3.5 text-base font-bold text-white shadow hover:bg-red-700 disabled:opacity-50"
+                  [disabled]="busy() !== null || !stdb.isConnected()"
+                  (click)="sendReport()"
+                >
+                  {{ busy() === 'report' ? 'Transmission…' : 'Envoyer au PCC' }}
+                </button>
+              </div>
+            } @else {
+              <p class="text-center text-xs text-slate-400">Touchez un type d'incident pour le signaler.</p>
+            }
+          </div>
+        } @else {
+          <!-- PCC messages inbox -->
+          <div class="flex flex-col gap-3 p-4">
+            <div>
+              <h1 class="text-lg font-bold text-slate-900">Messages du PCC</h1>
+              <p class="text-xs text-slate-500">🔒 Vue privée : seuls vos messages quittent le serveur.</p>
+            </div>
+            @for (m of messages(); track m.id) {
+              <article
+                class="rounded-2xl border p-3 transition"
+                [class]="m.acknowledged ? 'border-slate-200 bg-white' : 'border-blue-300 bg-blue-50 shadow-md'"
+                [class.drv-fresh]="freshIds().has(m.id)"
+              >
+                <header class="flex items-center gap-2 text-xs">
+                  @if (!m.acknowledged) {
+                    <span class="size-2 rounded-full bg-blue-600"></span>
+                  }
+                  <span class="font-semibold text-slate-800">{{ m.fromName }}</span>
+                  <span class="text-slate-400">· PCC · {{ vehicleLabel(m.vehicleId) }}</span>
+                  <span class="ml-auto text-slate-400 tabular-nums">{{ formatShortTime(m.sentAt) }}</span>
+                </header>
+                <p class="mt-1.5 text-[15px] leading-snug text-slate-900" [class.font-semibold]="!m.acknowledged">
+                  {{ m.body }}
+                </p>
+                <footer class="mt-2 flex items-center justify-between">
+                  <span class="text-[11px] text-slate-400">{{ age(m) }}</span>
+                  @if (m.acknowledged) {
+                    <span class="text-xs font-semibold text-emerald-700">
+                      Lu ✓ {{ formatShortTime(m.acknowledgedAt) }}
+                    </span>
+                  } @else {
+                    <button
+                      type="button"
+                      class="rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 disabled:opacity-50"
+                      [disabled]="busy() !== null || !stdb.isConnected()"
+                      (click)="acknowledge(m)"
+                    >
+                      {{ busy() === 'ack-' + m.id ? '…' : 'Bien reçu' }}
+                    </button>
+                  }
+                </footer>
+              </article>
+            } @empty {
+              <div class="flex flex-col items-center gap-2 py-12 text-center text-slate-400">
+                <span class="text-4xl">📭</span>
+                <p class="text-sm">Aucun message pour l'instant.</p>
+                <p class="text-xs">Les messages du PCC arrivent ici en temps réel.</p>
+              </div>
+            }
+            @if (inlineError(); as err) {
+              <p class="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-800" role="alert">{{ err }}</p>
+            }
+          </div>
+        }
+      }
+    </div>
+
+    <!-- Bottom tab bar (in service only) -->
+    @if (step() === 2 && ready() && !isSupervisorTab() && stdb.status() !== 'error') {
+      <nav class="grid grid-cols-3 border-t border-slate-200 bg-white pb-2 sm:pb-3" aria-label="Poste chauffeur">
+        <button
+          type="button"
+          class="flex flex-col items-center gap-0.5 pt-2 text-[11px] font-semibold"
+          [class]="tab() === 'drive' ? 'text-slate-900' : 'text-slate-400'"
+          (click)="tab.set('drive'); inlineError.set(null)"
+        >
+          <span class="text-xl">🚌</span> Conduite
+        </button>
+        <button
+          type="button"
+          class="flex flex-col items-center gap-0.5 pt-2 text-[11px] font-semibold"
+          [class]="tab() === 'report' ? 'text-red-600' : 'text-slate-400'"
+          (click)="tab.set('report'); inlineError.set(null)"
+        >
+          <span class="text-xl">🚨</span> Signaler
+        </button>
+        <button
+          type="button"
+          class="relative flex flex-col items-center gap-0.5 pt-2 text-[11px] font-semibold"
+          [class]="tab() === 'messages' ? 'text-blue-600' : 'text-slate-400'"
+          (click)="tab.set('messages'); inlineError.set(null)"
+        >
+          <span class="text-xl">✉️</span> Messages
+          @if (unread() > 0) {
+            <span
+              class="drv-badge-pulse absolute top-1 left-1/2 ml-2 grid h-5 min-w-5 place-items-center rounded-full bg-blue-600 px-1 text-[10px] font-bold text-white"
+              >{{ unread() }}</span
+            >
+          }
+        </button>
+      </nav>
+    }
+  </div>
+</div>
