@@ -556,3 +556,78 @@ spacetime generate --lang typescript --out-dir ./demo-app/src/module_bindings -p
 ```
 
 Puis fermer tous les onglets de l'application et les rouvrir (nouvelles identités).
+
+---
+
+## 10. Déploiement serveur (transville.baillod.tech)
+
+La démo tourne aussi sur un serveur Dockhand + Traefik, à l'adresse **https://transville.baillod.tech**.
+
+| Élément | Rôle |
+|---|---|
+| `Dockerfile` + `deploy/nginx.conf` | Image de l'app Angular (build de production servi par nginx) |
+| `.github/workflows/docker-publish.yml` | À chaque push sur `main` : build et push de `ghcr.io/johnattansoftcom/demo-spacetimedb-web` (tags `latest` et `sha-…`) |
+| `docker-compose.yml` | Stack `transville` : l'image officielle `clockworklabs/spacetime:v2.12.0` + l'image web, routées par Traefik |
+
+Routage Traefik sur le même domaine : tout ce qui commence par `/v1` va à SpacetimeDB (WebSocket des
+navigateurs, et `publish` / `sql` / `logs` de la CLI) ; le reste va à nginx. En production, l'app se
+connecte à sa propre origine (`demo-app/src/app/core/config.ts`), elle n'a donc rien à configurer.
+
+### Mise en place (une fois)
+
+1. DNS : un enregistrement `transville.baillod.tech` vers le serveur.
+2. Dockhand : ajouter le registre `ghcr.io` avec un jeton GitHub (PAT) ayant le droit `read:packages`
+   (l'image est privée, comme le dépôt).
+3. Dockhand : créer la stack à partir de `docker-compose.yml`. Le réseau externe `traefik-public` doit exister.
+4. Publier le module depuis le poste (voir ci-dessous) : tant qu'il n'est pas publié, l'app affiche
+   « Serveur injoignable ».
+
+### Publier le module (à la main, depuis le poste)
+
+La CLI ne garde **qu'un seul jeton d'identité** pour tous les serveurs. Celui de `~/.config/spacetime/cli.toml`
+a été émis par le serveur local : le serveur distant le refuse (`401 Invalid token: InvalidSignature`).
+On utilise donc un **fichier de config dédié** au serveur distant ; au premier `publish`, la CLI y obtient
+une identité émise par ce serveur.
+
+```bash
+export DOTNET_ROOT=$HOME/.dotnet PATH=$HOME/.dotnet:$PATH
+cd ~/dev/demo-spacetimedb
+
+# Une seule fois : déclarer le serveur dans la config dédiée
+spacetime --config-path ~/.config/spacetime/transville.toml server add transville --url https://transville.baillod.tech --default
+
+# Première publication, puis chaque mise à jour du module (mise à jour à chaud)
+spacetime --config-path ~/.config/spacetime/transville.toml publish transit-demo --server transville -p ./spacetimedb --no-config --yes
+```
+
+**Conservez `~/.config/spacetime/transville.toml`** : il contient l'identité propriétaire de la base.
+Sans lui, plus personne ne peut mettre à jour ni supprimer `transit-demo`, et il faut repartir d'un volume vide.
+
+Mêmes options pour les autres commandes, par exemple :
+
+```bash
+spacetime --config-path ~/.config/spacetime/transville.toml logs transit-demo --server transville --no-config -n 50
+spacetime --config-path ~/.config/spacetime/transville.toml sql transit-demo --server transville --no-config "SELECT * FROM vehicle_position"
+```
+
+Remise à zéro de la démo en ligne : ajouter `--delete-data=always` au `publish` (efface toutes les données).
+
+### Mettre à jour l'app
+
+Merge sur `main` → le workflow pousse une nouvelle image `latest` → dans Dockhand, « pull » puis
+redéployer le service `web`. Le serveur SpacetimeDB et ses données ne sont pas touchés. Pour revenir à
+une version précise, remplacer `latest` par un tag `sha-…` dans le compose.
+
+### Données et sauvegarde
+
+Le volume `transville_stdb_data` contient les données, les clés de signature des jetons et la config du
+serveur : le supprimer remet tout à zéro et invalide toutes les identités (y compris celle du fichier
+`transville.toml`). Il est monté sur `/home/spacetime` et non sur un chemin neuf comme `/stdb` : l'image
+tourne avec l'utilisateur non-root `spacetime`, et un volume neuf monté sur un chemin inexistant
+appartiendrait à root.
+
+### Limites assumées
+
+Rien ne restreint qui peut publier sur ce serveur : n'importe qui atteignant `/v1` peut créer **ses propres**
+bases (jamais modifier ni supprimer `transit-demo`), et le code superviseur `PCC2026` est public. C'est
+acceptable pour un serveur de démo, pas pour un client.

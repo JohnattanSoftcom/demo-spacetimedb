@@ -35,7 +35,8 @@ npm install
 npm start            # http://localhost:4200
 ```
 
-Le client se connecte à `ws://127.0.0.1:3000`, base `transit-demo` (`src/app/core/config.ts`).
+En développement, le client se connecte à `ws://127.0.0.1:3000`, base `transit-demo` (`src/app/core/config.ts`).
+Le build de production se connecte à sa propre origine : voir « Déploiement serveur » dans [`../DEMO.md`](../DEMO.md#10-déploiement-serveur-transvillebaillodtech).
 
 ## Scripts
 

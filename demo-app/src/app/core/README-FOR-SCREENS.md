@@ -6,7 +6,7 @@ Read this before you build `/supervision`, `/chauffeur` or `/arret/:stopId`. The
 
 | File | Purpose |
 |---|---|
-| `core/config.ts` | `SPACETIMEDB_URI` (`ws://127.0.0.1:3000`), `DB_NAME` (`transit-demo`), `DEMO_SUPERVISOR_CODE` (`PCC2026`), `MAP_CENTER` (`[46.803, 7.152]`), `MAP_ZOOM` (14) |
+| `core/config.ts` | `SPACETIMEDB_URI` (`ws://127.0.0.1:3000` in dev, the page origin in production), `DB_NAME` (`transit-demo`), `DEMO_SUPERVISOR_CODE` (`PCC2026`), `MAP_CENTER` (`[46.803, 7.152]`), `MAP_ZOOM` (14) |
 | `core/spacetime.service.ts` | `SpacetimeService`: the single connection, signals that mirror the tables, reducer wrappers and subscriptions |
 | `core/toast.service.ts` | `ToastService`: the toast queue, rendered by `<app-toast-host>` in the App root |
 | `core/labels.ts` | French labels for the enums, plus formatters (delay, ETA, time, age) and sort helpers |
@@ -48,7 +48,7 @@ constructor() { inject(DestroyRef).onDestroy(() => this.sub.dispose()); }
 | `retryConnection()` | `void` | Reloads the page |
 | `conn` | `DbConnection` | The raw SDK connection. Only use it for something the service does not cover |
 
-The token is stored in **sessionStorage** under `transville:ws://127.0.0.1:3000:transit-demo:token`. Each tab therefore has its own identity, except a tab made with "Dupliquer l'onglet". A rejected saved token is cleared and the page reloads once.
+The token is stored in **sessionStorage** under `transville:<SPACETIMEDB_URI>:transit-demo:token` (e.g. `transville:ws://127.0.0.1:3000:transit-demo:token` in dev). Each tab therefore has its own identity, except a tab made with "Dupliquer l'onglet". A rejected saved token is cleared and the page reloads once.
 
 ### Table signals
 

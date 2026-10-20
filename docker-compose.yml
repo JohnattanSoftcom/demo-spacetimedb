@@ -1,0 +1,80 @@
+# PRODUCTION stack for TransVille Live on https://transville.baillod.tech (Dockhand + Traefik).
+#
+# Two services behind the shared Traefik:
+#   - spacetimedb: the official SpacetimeDB server. Traefik sends it everything under /v1 --
+#     the browser's WebSocket and token calls, and the CLI's publish/sql/logs.
+#   - web: the Angular app served by nginx, built and pushed to GHCR by
+#     .github/workflows/docker-publish.yml on every push to main.
+#
+# The module is NOT deployed by this file: publish it by hand from a dev machine, see
+# "Déploiement serveur" in DEMO.md:
+#   spacetime server add transville --url https://transville.baillod.tech
+#   spacetime publish transit-demo --server transville -p ./spacetimedb --no-config --yes
+#
+# Nothing here restricts who may publish: anyone reaching /v1 can create databases of their
+# own (never update or delete ours). Accepted for a demo server.
+
+# Pinned so volume and container names don't depend on the checkout directory: the database
+# lives in 'transville_stdb_data', and a new prefix would start on an empty one.
+name: transville
+
+services:
+  spacetimedb:
+    image: clockworklabs/spacetime:v2.12.0
+    # The image's entrypoint is `spacetime` with no default command. --root-dir puts the data,
+    # the JWT signing keys and cli.toml under one directory, so a single volume keeps them all
+    # -- losing the keys would invalidate every identity the server ever issued.
+    command: ["--root-dir=/home/spacetime/stdb", "start", "--listen-addr=0.0.0.0:3000"]
+    volumes:
+      # Mounted on the home directory rather than on a fresh path like /stdb: the image runs
+      # as the non-root user 'spacetime' (uid 1000), and Docker only gives a new named volume
+      # the ownership of a directory that already exists in the image. A volume on /stdb comes
+      # up root-owned and the server cannot write to it.
+      - stdb_data:/home/spacetime
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/v1/ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-public
+      # Same host as the app; /v1 wins over the catch-all web router by priority.
+      - traefik.http.routers.transville-stdb.rule=Host(`transville.baillod.tech`) && PathPrefix(`/v1`)
+      - traefik.http.routers.transville-stdb.priority=100
+      - traefik.http.routers.transville-stdb.entrypoints=websecure
+      - traefik.http.routers.transville-stdb.tls.certresolver=letsencrypt
+      - traefik.http.services.transville-stdb.loadbalancer.server.port=3000
+    restart: unless-stopped
+    networks:
+      - default
+      - traefik-public
+
+  web:
+    image: ghcr.io/johnattansoftcom/demo-spacetimedb-web:latest
+    # In production the app connects to its own origin (core/config.ts), so it needs no
+    # configuration: Traefik forwards its /v1 calls to the spacetimedb service above.
+    depends_on:
+      spacetimedb:
+        condition: service_healthy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-public
+      - traefik.http.routers.transville-web.rule=Host(`transville.baillod.tech`)
+      - traefik.http.routers.transville-web.priority=1
+      - traefik.http.routers.transville-web.entrypoints=websecure
+      - traefik.http.routers.transville-web.tls.certresolver=letsencrypt
+      - traefik.http.services.transville-web.loadbalancer.server.port=80
+    restart: unless-stopped
+    networks:
+      - default
+      - traefik-public
+
+volumes:
+  stdb_data:
+
+networks:
+  default:
+  traefik-public:
+    external: true

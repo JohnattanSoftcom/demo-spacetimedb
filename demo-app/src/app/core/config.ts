@@ -1,5 +1,11 @@
-/** SpacetimeDB connection settings (local server only — never maincloud). */
-export const SPACETIMEDB_URI = 'ws://127.0.0.1:3000';
+import { isDevMode } from '@angular/core';
+
+/**
+ * SpacetimeDB connection settings (never maincloud).
+ * Dev (`ng serve`, tests): the local server. Production build: the page's own origin — the
+ * reverse proxy routes `/v1` to SpacetimeDB, and the SDK turns `https:` into `wss:`.
+ */
+export const SPACETIMEDB_URI = isDevMode() ? 'ws://127.0.0.1:3000' : location.origin;
 export const DB_NAME = 'transit-demo';
 
 /** sessionStorage key prefix: per database AND per tab → each tab gets its own identity. */

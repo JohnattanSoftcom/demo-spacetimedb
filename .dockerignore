@@ -1,0 +1,7 @@
+.git
+**/node_modules
+**/.DS_Store
+demo-app/dist
+demo-app/.angular
+spacetimedb/bin
+spacetimedb/obj
