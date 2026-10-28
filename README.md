@@ -55,6 +55,7 @@ Version en ligne : **https://transville.baillod.tech**
 | `Dockerfile`, `deploy/nginx.conf` | Image de l'app Angular servie par nginx |
 | `docker-compose.yml` | Stack serveur : SpacetimeDB officiel + app, derrière Traefik |
 | `.github/workflows/docker-publish.yml` | Publie l'image de l'app sur GHCR à chaque push sur `main` |
+| `.github/workflows/pages.yml` | Publie la présentation sur GitHub Pages |
 | `DEMO.md` | Guide du présentateur : prérequis, script de démo, dépannage, déploiement |
 | `SPEC.md` | Spécification technique : tables, reducers, vues, simulation |
 
@@ -102,5 +103,8 @@ Détails, sauvegarde et limites assumées : [`DEMO.md`, section 10](DEMO.md#10-d
 
 ## Présentation
 
-Ouvrir `presentation/index.html` dans un navigateur. Pour la modifier, éditer les fichiers de
-`presentation/src/parts/`, puis relancer `presentation/src/assemble.sh`.
+En ligne : **https://johnattansoftcom.github.io/demo-spacetimedb/**, republiée par
+`.github/workflows/pages.yml` à chaque push sur `main` qui modifie `presentation/`.
+
+En local, ouvrir `presentation/index.html` dans un navigateur. Pour la modifier, éditer les fichiers
+de `presentation/src/parts/`, puis relancer `presentation/src/assemble.sh`.
