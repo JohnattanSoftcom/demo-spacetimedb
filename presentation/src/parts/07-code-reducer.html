@@ -1,0 +1,42 @@
+<section id="slide-code-reducer" data-transition="fade">
+  <style>
+    #slide-code-reducer .hl { background:rgba(74,222,128,.13); border-left:4px solid #4ade80; border-radius:4px; }
+    #slide-code-reducer .box { border:2px dashed rgba(157,133,255,.75); border-radius:6px; background:rgba(157,133,255,.05); }
+    #slide-code-reducer .note { position:relative; }
+    #slide-code-reducer .note::before { content:''; position:absolute; left:-22px; top:0; bottom:0; width:3px; border-radius:2px; background:#4ade80; opacity:0; transition:opacity .4s ease; }
+    #slide-code-reducer .hl.visible:not(.current-fragment), #slide-code-reducer .box.visible:not(.current-fragment) { opacity:.45; }
+    #slide-code-reducer .note.current-fragment::before { opacity:1; }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:40px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Reducers · 07</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-1.5px;color:#f2f2f3">Un reducer, c’est du code serveur ordinaire</h2>
+<div style="display:flex;flex-direction:row;gap:48px">
+<div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#09090b;border:1px solid #202026;border-radius:8px;padding:40px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#5c5c66">spacetimedb/Reducers.cs</p>
+<div class="codewrap" style="position:relative">
+<div class="hl fragment grow-x" data-fragment-index="0" style="position:absolute;left:-16px;right:-16px;top:286px;height:40px"></div>
+<div class="hl fragment grow-x" data-fragment-index="1" style="position:absolute;left:-16px;right:-16px;top:142px;height:76px"></div>
+<div class="box fragment grow-x" data-fragment-index="2" style="position:absolute;left:-16px;right:-16px;top:214px;height:256px"></div>
+<p style="position:relative;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;color:#e6e6ea"><span style="color:#4ade80">[SpacetimeDB.Reducer]</span><br><span style="color:#b9a6ff">public static void</span> <span style="color:#22c7f0">ClaimVehicle</span>(<span style="color:#22c7f0">ReducerContext</span> ctx, <span style="color:#22c7f0">uint</span> vehicleId)<br>{<br>&#160;&#160;&#160;&#160;<span style="color:#b9a6ff">var</span> user = RequireRole(ctx, Role.Driver);&#160;&#160;&#160;<span style="color:#5c5c66">// rôle lu en base</span><br>&#160;&#160;&#160;&#160;<span style="color:#b9a6ff">if</span> (ctx.Db.DriverAssignment.VehicleId.Find(vehicleId) <span style="color:#b9a6ff">is</span> { } taken)<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#b9a6ff">throw new</span> <span style="color:#22c7f0">Exception</span>(<span style="color:#f0c674">$"Déjà pris par {taken.DriverName}."</span>);<br>&#160;&#160;&#160;&#160;ctx.Db.DriverAssignment.Insert(<span style="color:#b9a6ff">new</span> <span style="color:#22c7f0">DriverAssignment</span> {<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;VehicleId = vehicleId,<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;DriverIdentity = ctx.Sender,&#160;&#160;&#160;&#160;&#160;<span style="color:#5c5c66">// jamais un paramètre</span><br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;DriverName = user.Name,<br>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;ClaimedAt = ctx.Timestamp,<br>&#160;&#160;&#160;&#160;});<br>&#160;&#160;&#160;&#160;Audit(ctx, user.Name, <span style="color:#f0c674">"VEHICLE_CLAIMED"</span>, ...);<br>}</p>
+</div>
+</div>
+<div style="width:400px;display:flex;flex-direction:column;gap:36px;justify-content:center">
+<div class="note fragment rise" data-fragment-index="0" style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">ctx.Sender</p>
+<p style="font-size:28px;line-height:1.4;color:#a8a8b0">L’identité vient de la connexion authentifiée, jamais d’un argument.</p>
+</div>
+<div class="note fragment rise" data-fragment-index="1" style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">throw = rollback</p>
+<p style="font-size:28px;line-height:1.4;color:#a8a8b0">Une exception annule tout. L’appelant reçoit le message d’erreur.</p>
+</div>
+<div class="note fragment rise" data-fragment-index="2" style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Une transaction</p>
+<p style="font-size:28px;line-height:1.4;color:#a8a8b0">L’affectation et l’audit sont écrits ensemble, ou pas du tout.</p>
+</div>
+</div>
+</div>
+  </div>
+  <aside class="notes">Un reducer, c'est du code serveur ordinaire. L'identité vient de ctx.Sender, c'est-à-dire de la connexion authentifiée, jamais d'un argument que le client pourrait falsifier. Si on lance une exception, tout est annulé et l'appelant reçoit le message d'erreur. Et tout le reducer est une seule transaction : l'affectation et l'audit sont écrits ensemble, ou pas du tout.</aside>
+</section>

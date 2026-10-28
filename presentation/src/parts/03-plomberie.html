@@ -1,0 +1,87 @@
+<section id="slide-plomberie" data-transition="fade">
+  <style>
+    #slide-plomberie .tangle.fragment { transition:none; }
+    #slide-plomberie .tangle line { stroke-dasharray:1; stroke-dashoffset:1; }
+    #slide-plomberie .tangle.visible line { animation: plomb-draw .7s ease-out forwards; }
+    @keyframes plomb-draw { to { stroke-dashoffset:0; } }
+    #slide-plomberie .tangle.visible ~ .brick { animation: plomb-shake .45s ease-in-out 1.5s 2; }
+    @keyframes plomb-shake { 0%,100% { transform:none; } 25% { transform:translateX(-3px) rotate(-1deg); } 75% { transform:translateX(3px) rotate(1deg); } }
+  </style>
+  <div class="frame" style="display:flex; flex-direction:column; gap:32px; padding:176px 160px 112px; background:#050506">
+    <div style="position:absolute; top:96px; left:48px; width:1824px; height:936px; display:flex; flex-direction:column; background:#0d0d10; border:1px solid #202026; border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute; top:34px; left:1172px; width:700px; font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; line-height:1.5; letter-spacing:2px; text-align:right; text-transform:uppercase; color:#4ade80">Le constat · 03</p>
+    <div style="display:flex; flex-direction:column; gap:20px">
+      <p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; line-height:1.4; letter-spacing:2px; text-transform:uppercase; color:#8a8a93">Un backend temps réel, construit à la main</p>
+      <h2 style="font-family:Inter, Arial, sans-serif; font-size:64px; font-weight:600; line-height:1.1; letter-spacing:-1.5px; color:#f2f2f3">Des dizaines de briques à assembler</h2>
+    </div>
+    <div style="position:relative; width:1600px; height:620px">
+      <svg class="tangle fragment" data-fragment-index="5" aria-label="Lignes reliant chaque brique de l’architecture à plusieurs autres" style="position:absolute; left:0px; top:0px; width:1600px; height:620px" width="1600" height="620" viewBox="0 0 1600 620"><g fill="none" stroke="#8a8a93" stroke-width="2">
+        <line x1="80" y1="310" x2="380" y2="56" pathLength="1" style="animation-delay:0.00s"/>
+        <line x1="80" y1="310" x2="380" y2="310" pathLength="1" style="animation-delay:1.30s"/>
+        <line x1="80" y1="310" x2="380" y2="564" pathLength="1" style="animation-delay:1.02s"/>
+        <line x1="380" y1="56" x2="380" y2="310" pathLength="1" style="animation-delay:0.74s"/>
+        <line x1="380" y1="310" x2="380" y2="564" pathLength="1" style="animation-delay:0.46s"/>
+        <line x1="380" y1="56" x2="680" y2="196" pathLength="1" style="animation-delay:0.18s"/>
+        <line x1="380" y1="310" x2="680" y2="196" pathLength="1" style="animation-delay:1.47s"/>
+        <line x1="380" y1="310" x2="680" y2="424" pathLength="1" style="animation-delay:1.19s"/>
+        <line x1="380" y1="564" x2="680" y2="424" pathLength="1" style="animation-delay:0.91s"/>
+        <line x1="680" y1="196" x2="680" y2="424" pathLength="1" style="animation-delay:0.63s"/>
+        <line x1="380" y1="56" x2="980" y2="56" pathLength="1" style="animation-delay:0.35s"/>
+        <line x1="380" y1="56" x2="980" y2="196" pathLength="1" style="animation-delay:0.07s"/>
+        <line x1="680" y1="196" x2="980" y2="56" pathLength="1" style="animation-delay:1.37s"/>
+        <line x1="680" y1="196" x2="980" y2="196" pathLength="1" style="animation-delay:1.09s"/>
+        <line x1="680" y1="196" x2="980" y2="424" pathLength="1" style="animation-delay:0.81s"/>
+        <line x1="680" y1="196" x2="980" y2="564" pathLength="1" style="animation-delay:0.53s"/>
+        <line x1="680" y1="424" x2="980" y2="196" pathLength="1" style="animation-delay:0.25s"/>
+        <line x1="680" y1="424" x2="980" y2="424" pathLength="1" style="animation-delay:1.54s"/>
+        <line x1="680" y1="424" x2="980" y2="564" pathLength="1" style="animation-delay:1.26s"/>
+        <line x1="380" y1="564" x2="980" y2="424" pathLength="1" style="animation-delay:0.98s"/>
+        <line x1="380" y1="564" x2="980" y2="564" pathLength="1" style="animation-delay:0.70s"/>
+        <line x1="980" y1="56" x2="1180" y2="56" pathLength="1" style="animation-delay:0.42s"/>
+        <line x1="980" y1="196" x2="1180" y2="196" pathLength="1" style="animation-delay:0.14s"/>
+        <line x1="980" y1="424" x2="1180" y2="424" pathLength="1" style="animation-delay:1.44s"/>
+        <line x1="980" y1="564" x2="1180" y2="564" pathLength="1" style="animation-delay:1.16s"/>
+        <line x1="980" y1="56" x2="980" y2="196" pathLength="1" style="animation-delay:0.88s"/>
+        <line x1="1180" y1="56" x2="1180" y2="196" pathLength="1" style="animation-delay:0.60s"/>
+        <line x1="980" y1="424" x2="980" y2="564" pathLength="1" style="animation-delay:0.32s"/>
+        <line x1="1180" y1="424" x2="1180" y2="564" pathLength="1" style="animation-delay:0.04s"/>
+        <line x1="980" y1="196" x2="980" y2="424" pathLength="1" style="animation-delay:1.33s"/>
+        <line x1="1180" y1="196" x2="1180" y2="424" pathLength="1" style="animation-delay:1.05s"/>
+        <line x1="980" y1="196" x2="1180" y2="424" pathLength="1" style="animation-delay:0.77s"/>
+        <line x1="1180" y1="196" x2="980" y2="424" pathLength="1" style="animation-delay:0.49s"/>
+        <line x1="1180" y1="56" x2="1520" y2="56" pathLength="1" style="animation-delay:0.21s"/>
+        <line x1="1180" y1="56" x2="1520" y2="196" pathLength="1" style="animation-delay:1.51s"/>
+        <line x1="1180" y1="196" x2="1520" y2="56" pathLength="1" style="animation-delay:1.23s"/>
+        <line x1="1180" y1="196" x2="1520" y2="196" pathLength="1" style="animation-delay:0.95s"/>
+        <line x1="1180" y1="424" x2="1520" y2="196" pathLength="1" style="animation-delay:0.67s"/>
+        <line x1="1180" y1="424" x2="1520" y2="424" pathLength="1" style="animation-delay:0.39s"/>
+        <line x1="1180" y1="424" x2="1520" y2="564" pathLength="1" style="animation-delay:0.11s"/>
+        <line x1="1180" y1="564" x2="1520" y2="424" pathLength="1" style="animation-delay:1.40s"/>
+        <line x1="1180" y1="564" x2="1520" y2="564" pathLength="1" style="animation-delay:1.12s"/>
+        <line x1="1520" y1="56" x2="1520" y2="196" pathLength="1" style="animation-delay:0.84s"/>
+        <line x1="1520" y1="196" x2="1520" y2="424" pathLength="1" style="animation-delay:0.56s"/>
+        <line x1="1520" y1="424" x2="1520" y2="564" pathLength="1" style="animation-delay:0.28s"/>
+      </g></svg>
+      <div class="brick fragment pop" data-fragment-index="0" style="position:absolute; left:0px; top:254px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#474232; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#f0d58c">CLIENT</p></div>
+      <div class="brick fragment pop" data-fragment-index="1" style="position:absolute; left:300px; top:0px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#312a4a; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#b9a6ff">IAM</p></div>
+      <div class="brick fragment pop" data-fragment-index="1" style="position:absolute; left:300px; top:254px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#43302f; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#f3a7a7">VPC</p></div>
+      <div class="brick fragment pop" data-fragment-index="1" style="position:absolute; left:300px; top:508px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#26432f; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#7ee8a2">KUBERNETES</p></div>
+      <div class="brick fragment pop" data-fragment-index="2" style="position:absolute; left:600px; top:140px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#26432f; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#7ee8a2">PROXY</p></div>
+      <div class="brick fragment pop" data-fragment-index="2" style="position:absolute; left:600px; top:368px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#474232; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#f0d58c">LOAD BALANCER</p></div>
+      <div class="brick fragment pop" data-fragment-index="3" style="position:absolute; left:900px; top:0px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#474232; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#f0d58c">API SERVER</p></div>
+      <div class="brick fragment pop" data-fragment-index="3" style="position:absolute; left:1100px; top:0px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#474232; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#f0d58c">API SERVER</p></div>
+      <div class="brick fragment pop" data-fragment-index="3" style="position:absolute; left:900px; top:140px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#474232; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#f0d58c">API SERVER</p></div>
+      <div class="brick fragment pop" data-fragment-index="3" style="position:absolute; left:1100px; top:140px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#474232; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#f0d58c">API SERVER</p></div>
+      <div class="brick fragment pop" data-fragment-index="3" style="position:absolute; left:900px; top:368px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#183a4a; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#5cc8f2">WEB SERVER</p></div>
+      <div class="brick fragment pop" data-fragment-index="3" style="position:absolute; left:1100px; top:368px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#183a4a; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#5cc8f2">WEB SERVER</p></div>
+      <div class="brick fragment pop" data-fragment-index="3" style="position:absolute; left:900px; top:508px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#183a4a; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#5cc8f2">WEB SERVER</p></div>
+      <div class="brick fragment pop" data-fragment-index="3" style="position:absolute; left:1100px; top:508px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#183a4a; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#5cc8f2">WEB SERVER</p></div>
+      <div class="brick fragment pop" data-fragment-index="4" style="position:absolute; left:1440px; top:0px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#183a4a; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#5cc8f2">BACKUPS</p></div>
+      <div class="brick fragment pop" data-fragment-index="4" style="position:absolute; left:1440px; top:140px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#43302f; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#f3a7a7">ANALYTICS</p></div>
+      <div class="brick fragment pop" data-fragment-index="4" style="position:absolute; left:1440px; top:368px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#26432f; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#7ee8a2">OBJECT STORAGE</p></div>
+      <div class="brick fragment pop" data-fragment-index="4" style="position:absolute; left:1440px; top:508px; width:160px; height:112px; display:flex; align-items:center; justify-content:center; padding:8px; background:#312a4a; border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; font-weight:500; line-height:1.2; text-align:center; color:#b9a6ff">RDBMS</p></div>
+    </div>
+  </div>
+  <aside class="notes">Pour construire un backend temps réel à la main, il faut assembler des dizaines de briques : client, IAM, réseau, Kubernetes, proxy, load balancer, serveurs d'API et web, base de données, stockage, backups, analytics. Et surtout, il faut toutes les relier entre elles. Chaque ligne, c'est de la configuration, du code de colle et un point de panne possible. C'est cette plomberie que Spacetime veut faire disparaître.</aside>
+</section>

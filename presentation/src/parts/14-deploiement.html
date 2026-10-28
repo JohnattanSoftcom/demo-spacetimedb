@@ -1,0 +1,71 @@
+<section id="slide-deploiement" data-transition="fade">
+  <style>
+    #slide-deploiement .col .item { opacity:0; }
+    #slide-deploiement .col.visible .item { animation: dep-item .45s ease-out both; }
+    @keyframes dep-item { from { opacity:0; transform:translateX(-16px); } to { opacity:1; transform:none; } }
+    #slide-deploiement .col.visible .ring { animation: dep-ring .9s ease-out .15s both; }
+    @keyframes dep-ring { 0% { box-shadow:0 0 0 0 var(--acc); } 100% { box-shadow:0 0 0 14px transparent; } }
+  </style>
+  <div class="frame" style="display:flex; flex-direction:column; gap:44px; padding:176px 160px 112px; background:#050506">
+    <div style="position:absolute; top:96px; left:48px; width:1824px; height:936px; display:flex; flex-direction:column; background:#0d0d10; border:1px solid #202026; border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute; top:34px; left:1172px; width:700px; font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; line-height:1.5; letter-spacing:2px; text-align:right; text-transform:uppercase; color:#4ade80">Hébergement · 14</p>
+    <h2 style="font-family:Inter, Arial, sans-serif; font-size:56px; font-weight:600; line-height:1.1; letter-spacing:-1.2px; color:#f2f2f3">Trois façons de l’héberger</h2>
+    <div style="display:flex; flex-direction:row; gap:32px">
+      <div class="col fragment rise" data-fragment-index="0" style="display:flex; flex-direction:column; gap:20px; flex:1; min-height:591px; padding:40px; background:#16161a; border:1px solid #2a2a31; border-radius:8px; --acc:#4ade80">
+        <div style="display:flex; flex-direction:row; gap:16px; align-items:center">
+          <div class="ring" style="width:24px; height:24px; display:flex; flex-direction:column; border:3px solid #4ade80; border-radius:256px"></div>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:36px; font-weight:600; color:#4ade80">Standalone</p>
+        </div>
+        <p style="font-family:Inter, Arial, sans-serif; font-size:64px; font-weight:600; line-height:1.1; color:#f2f2f3">0 $</p>
+        <div class="item" style="display:flex; flex-direction:row; gap:16px; align-items:start; animation-delay:0.35s">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px; height:32px; color:#4ade80"><polyline points="20 6 9 17 4 12"/></svg>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:28px; line-height:1.4; color:#a8a8b0">Nœud unique, sur vos serveurs</p>
+        </div>
+        <div class="item" style="display:flex; flex-direction:row; gap:16px; align-items:start; animation-delay:0.53s">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px; height:32px; color:#4ade80"><polyline points="20 6 9 17 4 12"/></svg>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:28px; line-height:1.4; color:#a8a8b0">Code source sur GitHub</p>
+        </div>
+      </div>
+      <div class="col fragment rise" data-fragment-index="1" style="display:flex; flex-direction:column; gap:20px; flex:1; padding:40px; background:#16161a; border:1px solid #2a2a31; border-radius:8px; --acc:#22c7f0">
+        <div style="display:flex; flex-direction:row; gap:16px; align-items:center">
+          <div class="ring" style="width:24px; height:24px; display:flex; flex-direction:column; border:3px solid #22c7f0; border-radius:256px"></div>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:36px; font-weight:600; color:#22c7f0">Maincloud</p>
+        </div>
+        <p style="font-family:Inter, Arial, sans-serif; font-size:64px; font-weight:600; line-height:1.1; color:#f2f2f3">À l’usage</p>
+        <div class="item" style="display:flex; flex-direction:row; gap:16px; align-items:start; animation-delay:0.35s">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px; height:32px; color:#22c7f0"><polyline points="20 6 9 17 4 12"/></svg>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:28px; line-height:1.4; color:#a8a8b0">Cloud managé multi-tenant</p>
+        </div>
+        <div class="item" style="display:flex; flex-direction:row; gap:16px; align-items:start; animation-delay:0.53s">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px; height:32px; color:#22c7f0"><polyline points="20 6 9 17 4 12"/></svg>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:28px; line-height:1.4; color:#a8a8b0">Déploiement : spacetime publish</p>
+        </div>
+        <div class="item" style="display:flex; flex-direction:row; gap:16px; align-items:start; animation-delay:0.71s">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px; height:32px; color:#22c7f0"><polyline points="20 6 9 17 4 12"/></svg>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:28px; line-height:1.4; color:#a8a8b0">Facturé à l’énergie consommée</p>
+        </div>
+      </div>
+      <div class="col fragment rise" data-fragment-index="2" style="display:flex; flex-direction:column; gap:20px; flex:1; padding:40px; background:#16161a; border:1px solid #2a2a31; border-radius:8px; --acc:#9d85ff">
+        <div style="display:flex; flex-direction:row; gap:16px; align-items:center">
+          <div class="ring" style="width:24px; height:24px; display:flex; flex-direction:column; border:3px solid #9d85ff; border-radius:256px"></div>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:36px; font-weight:600; color:#9d85ff">Enterprise</p>
+        </div>
+        <p style="font-family:Inter, Arial, sans-serif; font-size:64px; font-weight:600; line-height:1.1; color:#f2f2f3">Sur devis</p>
+        <div class="item" style="display:flex; flex-direction:row; gap:16px; align-items:start; animation-delay:0.35s">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px; height:32px; color:#9d85ff"><polyline points="20 6 9 17 4 12"/></svg>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:28px; line-height:1.4; color:#a8a8b0">Clusters dédiés ou on-premise</p>
+        </div>
+        <div class="item" style="display:flex; flex-direction:row; gap:16px; align-items:start; animation-delay:0.53s">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px; height:32px; color:#9d85ff"><polyline points="20 6 9 17 4 12"/></svg>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:28px; line-height:1.4; color:#a8a8b0">Support entreprise</p>
+        </div>
+        <div class="item" style="display:flex; flex-direction:row; gap:16px; align-items:start; animation-delay:0.71s">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:32px; height:32px; color:#9d85ff"><polyline points="20 6 9 17 4 12"/></svg>
+          <p style="font-family:Inter, Arial, sans-serif; font-size:28px; line-height:1.4; color:#a8a8b0">Réplication, protection DoS</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Trois options d’hébergement. Standalone : gratuit, un nœud unique sur vos propres serveurs, le code source est sur GitHub. Maincloud : le cloud managé multi-tenant de Clockwork Labs, on déploie avec spacetime publish et on paie à l’énergie consommée. Enterprise : clusters dédiés ou on-premise, support, réplication et protection DoS, sur devis.</aside>
+</section>

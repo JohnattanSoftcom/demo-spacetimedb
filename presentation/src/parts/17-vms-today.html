@@ -1,0 +1,56 @@
+<section id="slide-vms-today" data-transition="fade">
+  <style>
+    #slide-vms-today .box { transition:none; }
+    #slide-vms-today .box.fragment { opacity:0; visibility:hidden; }
+    #slide-vms-today .box.fragment.visible { visibility:visible; animation: vt-box .5s cubic-bezier(.3,1.5,.5,1) var(--d) both; }
+    @keyframes vt-box { from { opacity:0; transform:scale(.8); } to { opacity:1; transform:none; } }
+    #slide-vms-today g.draw { transition:none; }
+    #slide-vms-today g.draw path { stroke-dasharray:1; stroke-dashoffset:1; }
+    #slide-vms-today g.draw.visible path { animation: vt-draw .8s ease-out .3s forwards; }
+    #slide-vms-today g.draw.visible path:nth-child(2) { animation-delay:.4s; }
+    #slide-vms-today g.draw.visible path:nth-child(3) { animation-delay:.5s; }
+    #slide-vms-today g.draw.visible path:nth-child(4) { animation-delay:.6s; }
+    #slide-vms-today g.draw.visible path:nth-child(5) { animation-delay:.7s; }
+    #slide-vms-today g.draw.visible path:nth-child(6) { animation-delay:.8s; }
+    @keyframes vt-draw { to { stroke-dashoffset:0; } }
+    #slide-vms-today .chips p { opacity:0; }
+    #slide-vms-today .chips.visible p { animation: vt-chip .4s ease-out both; }
+    @keyframes vt-chip { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:none; } }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:32px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">VMS-VD aujourd’hui · 17</p>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;letter-spacing:2px;text-transform:uppercase;color:#8a8a93">Orleans · Galera · RabbitMQ · SignalR · OPC UA</p>
+      <h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-1.5px;color:#f2f2f3">L’architecture actuelle, redondée sur deux nœuds</h2>
+    </div>
+    <div style="position:relative;width:1600px;height:480px">
+      <svg aria-label="Lignes reliant les onze briques de l’architecture VMS-VD actuelle" style="position:absolute;left:0px;top:0px;width:1600px;height:480px" width="1600" height="480" viewBox="0 0 1600 480" fill="none" stroke="#5c5c66" stroke-width="2">
+      <g class="draw fragment" data-fragment-index="0"><path d="M120 56L392 240" pathLength="1"/><path d="M120 424L392 240" pathLength="1"/></g>
+      <g class="draw fragment" data-fragment-index="1"><path d="M392 240L664 56" pathLength="1"/><path d="M392 240L664 424" pathLength="1"/></g>
+      <g class="draw fragment" data-fragment-index="2"><path d="M664 56L936 240" pathLength="1"/><path d="M664 424L936 240" pathLength="1"/></g>
+      <g class="draw fragment" data-fragment-index="3"><path d="M664 56L1208 56" pathLength="1"/><path d="M664 424L1208 424" pathLength="1"/><path d="M936 240L1208 56" pathLength="1"/><path d="M936 240L1208 424" pathLength="1"/><path d="M1208 56L1208 424" pathLength="1"/></g>
+      <g class="draw fragment" data-fragment-index="4"><path d="M1208 56L1480 56" pathLength="1"/><path d="M1208 56L1480 240" pathLength="1"/><path d="M1208 56L1480 424" pathLength="1"/><path d="M1208 424L1480 56" pathLength="1"/><path d="M1208 424L1480 240" pathLength="1"/><path d="M1208 424L1480 424" pathLength="1"/></g>
+      </svg>
+      <div class="box fragment" data-fragment-index="0" style="position:absolute;left:0px;top:0px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#474232;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#f0d58c">ANGULAR 9</p></div>
+      <div class="box fragment" data-fragment-index="0" style="position:absolute;left:0px;top:368px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#474232;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#f0d58c">SGE STERIA</p></div>
+      <div class="box fragment" data-fragment-index="0" style="position:absolute;left:272px;top:184px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#43302f;border-radius:8px;--d:0.25s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#f3a7a7">KEEPALIVED VIP</p></div>
+      <div class="box fragment" data-fragment-index="1" style="position:absolute;left:544px;top:0px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#183a4a;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#5cc8f2">WEB API + SIGNALR</p></div>
+      <div class="box fragment" data-fragment-index="1" style="position:absolute;left:544px;top:368px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#183a4a;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#5cc8f2">SERVEUR OPC UA</p></div>
+      <div class="box fragment" data-fragment-index="2" style="position:absolute;left:816px;top:184px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#43302f;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#f3a7a7">RABBITMQ</p></div>
+      <div class="box fragment" data-fragment-index="3" style="position:absolute;left:1088px;top:0px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#183a4a;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#5cc8f2">SILO ORLEANS 1</p></div>
+      <div class="box fragment" data-fragment-index="3" style="position:absolute;left:1088px;top:368px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#183a4a;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#5cc8f2">SILO ORLEANS 2</p></div>
+      <div class="box fragment" data-fragment-index="4" style="position:absolute;left:1360px;top:0px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#312a4a;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#b9a6ff">MARIADB GALERA ×3</p></div>
+      <div class="box fragment" data-fragment-index="4" style="position:absolute;left:1360px;top:184px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#26432f;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#7ee8a2">DÉCODEURS WEYTEC</p></div>
+      <div class="box fragment" data-fragment-index="4" style="position:absolute;left:1360px;top:368px;width:240px;height:112px;display:flex;align-items:center;justify-content:center;padding:8px;background:#26432f;border-radius:8px;--d:0.0s"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;font-weight:500;line-height:1.2;text-align:center;color:#7ee8a2">SNMP · PING</p></div>
+    </div>
+    <div class="chips fragment" data-fragment-index="5" style="display:flex;flex-direction:row;gap:16px">
+      <p style="background:#16161a;border:1px solid #2a2a31;border-radius:4px;padding:12px 22px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#c9c9cf;animation-delay:0.00s">14 projets .NET Core 3.1</p>
+      <p style="background:#16161a;border:1px solid #2a2a31;border-radius:4px;padding:12px 22px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#c9c9cf;animation-delay:0.12s">10 contrôleurs REST</p>
+      <p style="background:#16161a;border:1px solid #2a2a31;border-radius:4px;padding:12px 22px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#c9c9cf;animation-delay:0.24s">3 schémas MariaDB</p>
+      <p style="background:#16161a;border:1px solid #2a2a31;border-radius:4px;padding:12px 22px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#c9c9cf;animation-delay:0.36s">10 types d’événements</p>
+    </div>
+  </div>
+  <aside class="notes">Trois services déployés par Ansible en systemd sur chaque nœud : le serveur Orleans (les grains : moniteurs, murs, groupes, séquences, monitoring), le web (API REST + hub SignalR + upload de config) et le serveur OPC UA pour le système supérieur de Steria. Autour : Galera sur trois nœuds dont un partagé avec les tunnels, un cluster RabbitMQ pour faire circuler les événements entre les trois services, keepalived pour l'IP virtuelle. Plus Graylog pour les logs. Chaque brique est raisonnable seule ; c'est leur somme qui coûte : déploiement, recovery Galera, nettoyage du clustering Orleans, watchdog de la base…</aside>
+</section>

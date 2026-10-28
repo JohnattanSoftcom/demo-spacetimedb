@@ -1,0 +1,44 @@
+<section id="slide-securite" data-transition="fade">
+  <style>
+    #slide-securite .wasm { transition:box-shadow .4s; }
+    #slide-securite .module.visible .wasm { animation: sec-pulse 1.6s ease-out .3s forwards; }
+    @keyframes sec-pulse { 0% { box-shadow:0 0 0 #6d4aff00; } 45% { box-shadow:0 0 96px #6d4affaa; } 100% { box-shadow:0 0 48px #6d4aff59; } }
+    #slide-securite .module.visible .shackle { animation: sec-lock .6s ease-in .5s both; }
+    @keyframes sec-lock { 0% { transform:translateY(-4px); } 100% { transform:translateY(0); } }
+  </style>
+  <div class="frame" style="display:flex; flex-direction:column; gap:48px; padding:176px 160px 112px; background:#050506">
+    <div style="position:absolute; top:96px; left:48px; width:1824px; height:936px; display:flex; flex-direction:column; background:#0d0d10; border:1px solid #202026; border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute; top:34px; left:1172px; width:700px; font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; line-height:1.5; letter-spacing:2px; text-align:right; text-transform:uppercase; color:#4ade80">Sécurité · 12</p>
+    <h2 style="font-family:Inter, Arial, sans-serif; font-size:56px; font-weight:600; line-height:1.1; letter-spacing:-1.2px; color:#f2f2f3">Les clients se connectent à la base, mais n’écrivent qu’à travers vos reducers</h2>
+    <div style="display:flex; flex-direction:row; gap:72px; align-items:center">
+      <div class="module fragment pop" data-fragment-index="0" style="width:520px; height:520px; display:flex; flex-direction:column; gap:32px; align-items:center; justify-content:center; background:#09090b; border:1px solid #202026; border-radius:8px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:28px; letter-spacing:4px; color:#f2f2f3">RUST</p>
+        <div class="wasm" style="width:200px; height:200px; display:flex; flex-direction:column; gap:12px; align-items:center; justify-content:center; background:#221c38; border:2px solid #6d4aff; border-radius:8px; box-shadow:0 0 48px #6d4aff59">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:88px; height:88px; color:#b9a6ff"><rect x="4" y="11" width="16" height="10" rx="2"/><path class="shackle" d="M8 11V7a4 4 0 0 1 8 0v4"/><circle cx="12" cy="16" r="1.2"/></svg>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; letter-spacing:2px; color:#b9a6ff">WASM</p>
+        </div>
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; letter-spacing:2px; text-transform:uppercase; color:#8a8a93">Module isolé</p>
+      </div>
+      <div style="display:flex; flex-direction:column; flex:1">
+        <div class="fragment rise" data-fragment-index="1" style="display:flex; flex-direction:row; gap:28px; padding:24px 0; border-top:1px solid #2a2a31">
+          <p style="width:48px; font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; color:#4ade80">01</p>
+          <p style="flex:1; font-family:Inter, Arial, sans-serif; font-size:30px; line-height:1.4; color:#f2f2f3">Écrit en Rust ; chaque module tourne dans une sandbox WebAssembly.</p>
+        </div>
+        <div class="fragment rise" data-fragment-index="2" style="display:flex; flex-direction:row; gap:28px; padding:24px 0; border-top:1px solid #2a2a31">
+          <p style="width:48px; font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; color:#4ade80">02</p>
+          <p style="flex:1; font-family:Inter, Arial, sans-serif; font-size:30px; line-height:1.4; color:#f2f2f3">Écriture uniquement par les reducers : vos règles d’autorisation, en C#. Une erreur annule tout.</p>
+        </div>
+        <div class="fragment rise" data-fragment-index="3" style="display:flex; flex-direction:row; gap:28px; padding:24px 0; border-top:1px solid #2a2a31">
+          <p style="width:48px; font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; color:#4ade80">03</p>
+          <p style="flex:1; font-family:Inter, Arial, sans-serif; font-size:30px; line-height:1.4; color:#f2f2f3">Lecture contrôlée : tables privées par défaut, vues et filtres évalués par client.</p>
+        </div>
+        <div class="fragment rise" data-fragment-index="4" style="display:flex; flex-direction:row; gap:28px; padding:24px 0; border-top:1px solid #2a2a31; border-bottom:1px solid #2a2a31">
+          <p style="width:48px; font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; color:#4ade80">04</p>
+          <p style="flex:1; font-family:Inter, Arial, sans-serif; font-size:30px; line-height:1.4; color:#f2f2f3">Identité compatible OpenID Connect : Keycloak, Auth0, Google, etc.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Les clients parlent directement à la base, mais ça ne veut pas dire qu’ils peuvent tout faire. Le module tourne isolé dans une sandbox WebAssembly. Les écritures passent uniquement par les reducers, où vivent vos règles d’autorisation ; une exception annule toute la transaction. En lecture, les tables sont privées par défaut et les vues ou filtres sont évalués pour chaque client. Et l’identité repose sur OpenID Connect : Keycloak, Auth0, Google, etc.</aside>
+</section>

@@ -1,0 +1,62 @@
+<section id="slide-vms-cible" data-transition="fade">
+<style>
+#slide-vms-cible .lk { stroke-dasharray:220; stroke-dashoffset:220; }
+#slide-vms-cible .lk.visible { animation:cib-draw .7s ease-out forwards; }
+@keyframes cib-draw { to { stroke-dashoffset:0; } }
+#slide-vms-cible .pk { position:absolute; left:0; top:0; width:14px; height:14px; border-radius:50%; offset-rotate:0deg; offset-distance:50%; }
+#slide-vms-cible .pk.sub { background:#4ade80; box-shadow:0 0 14px 2px rgba(74,222,128,.8); }
+#slide-vms-cible .pk.red { background:#22c7f0; box-shadow:0 0 14px 2px rgba(34,199,240,.8); }
+#slide-vms-cible .pk.visible { animation:cib-move 2.4s linear .7s infinite; }
+#slide-vms-cible .pk.red.visible { animation-delay:1.9s; }
+@keyframes cib-move { 0%{offset-distance:0%;opacity:0} 10%{opacity:1} 90%{opacity:1} 100%{offset-distance:100%;opacity:0} }
+</style>
+<div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:32px">
+<div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+<svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+<p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Au-delà du cas · 21</p>
+<div style="display:flex;flex-direction:column;gap:20px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;letter-spacing:2px;text-transform:uppercase;color:#8a8a93">Généraliser à tout le VMS</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-1.5px;color:#f2f2f3">Tout s’abonne au même module</h2>
+</div>
+<div style="position:relative;width:1600px;height:500px">
+<svg aria-label="Quatre clients reliés directement au module Spacetime central, en étoile" style="position:absolute;left:0px;top:0px;width:1600px;height:500px" width="1600" height="500" viewBox="0 0 1600 500"><path class="fragment lk" data-fragment-index="1" d="M520 130L300 130" fill="none" stroke="#4ade80" stroke-width="3"/><path class="fragment lk" data-fragment-index="2" d="M520 390L300 390" fill="none" stroke="#4ade80" stroke-width="3"/><path class="fragment lk" data-fragment-index="3" d="M1080 130L1300 130" fill="none" stroke="#4ade80" stroke-width="3"/><path class="fragment lk" data-fragment-index="4" d="M1080 390L1300 390" fill="none" stroke="#4ade80" stroke-width="3"/></svg><div class="fragment pk sub" data-fragment-index="1" style="offset-path:path('M520 130L300 130')"></div><div class="fragment pk red" data-fragment-index="1" style="offset-path:path('M300 130L520 130')"></div><div class="fragment pk sub" data-fragment-index="2" style="offset-path:path('M520 390L300 390')"></div><div class="fragment pk red" data-fragment-index="2" style="offset-path:path('M300 390L520 390')"></div><div class="fragment pk sub" data-fragment-index="3" style="offset-path:path('M1080 130L1300 130')"></div><div class="fragment pk red" data-fragment-index="3" style="offset-path:path('M1300 130L1080 130')"></div><div class="fragment pk sub" data-fragment-index="4" style="offset-path:path('M1080 390L1300 390')"></div><div class="fragment pk red" data-fragment-index="4" style="offset-path:path('M1300 390L1080 390')"></div>
+<div class="fragment pop" data-fragment-index="1" style="position:absolute;left:0px;top:40px;width:300px;height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:20px 24px;background:#2a2718;border:1px solid #474232;border-radius:8px"><p style="font-size:30px;font-weight:600;line-height:1.2;color:#f2f2f3">UI Angular</p><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.2;color:#f0d58c">5 centres</p></div>
+<div class="fragment pop" data-fragment-index="2" style="position:absolute;left:0px;top:300px;width:300px;height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:20px 24px;background:#10242e;border:1px solid #183a4a;border-radius:8px"><p style="font-size:30px;font-weight:600;line-height:1.2;color:#f2f2f3">Passerelle OPC UA</p><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.2;color:#5cc8f2">↔ SGE Steria</p></div>
+<div class="fragment pop" data-fragment-index="3" style="position:absolute;left:1300px;top:40px;width:300px;height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:20px 24px;background:#14261a;border:1px solid #26432f;border-radius:8px"><p style="font-size:30px;font-weight:600;line-height:1.2;color:#f2f2f3">Décodeurs</p><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.2;color:#7ee8a2">lisent leurs moniteurs</p></div>
+<div class="fragment pop" data-fragment-index="4" style="position:absolute;left:1300px;top:300px;width:300px;height:180px;display:flex;flex-direction:column;justify-content:center;gap:8px;padding:20px 24px;background:#14261a;border:1px solid #26432f;border-radius:8px"><p style="font-size:30px;font-weight:600;line-height:1.2;color:#f2f2f3">Agent monitoring</p><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.2;color:#7ee8a2">→ SNMP · ping</p></div>
+<p class="fragment" data-fragment-index="1" style="position:absolute;left:300px;top:76px;width:220px;text-align:center;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#8a8a93">abonnements</p>
+<p class="fragment" data-fragment-index="1" style="position:absolute;left:300px;top:140px;width:220px;text-align:center;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#8a8a93">reducers</p>
+<p class="fragment" data-fragment-index="2" style="position:absolute;left:300px;top:336px;width:220px;text-align:center;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#8a8a93">abonnements</p>
+<p class="fragment" data-fragment-index="2" style="position:absolute;left:300px;top:400px;width:220px;text-align:center;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#8a8a93">reducers</p>
+<p class="fragment" data-fragment-index="3" style="position:absolute;left:1080px;top:76px;width:220px;text-align:center;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#8a8a93">abonnements</p>
+<p class="fragment" data-fragment-index="3" style="position:absolute;left:1080px;top:140px;width:220px;text-align:center;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#8a8a93">reducers</p>
+<p class="fragment" data-fragment-index="4" style="position:absolute;left:1080px;top:336px;width:220px;text-align:center;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#8a8a93">abonnements</p>
+<p class="fragment" data-fragment-index="4" style="position:absolute;left:1080px;top:400px;width:220px;text-align:center;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#8a8a93">reducers</p>
+<div class="fragment pop" data-fragment-index="0" style="position:absolute;left:520px;top:0px;width:560px;display:flex;flex-direction:column;gap:20px;padding:32px 40px;background:#0f2418;border:2px solid #4ade80;border-radius:12px">
+<div style="display:flex;flex-direction:column;gap:4px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Module VMS · C#</p><p style="font-size:40px;font-weight:600;line-height:1.2;color:#f2f2f3">Spacetime</p></div>
+<div style="display:flex;flex-direction:row;gap:24px">
+<div style="flex:1;display:flex;flex-direction:column;gap:2px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#8a8a93">TABLES</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#b9a6ff">camera</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#b9a6ff">decoder</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#b9a6ff">video_player</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#b9a6ff">video_wall</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#b9a6ff">player_group</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#b9a6ff">scenario</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#b9a6ff">alarm</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#b9a6ff">journal</p>
+</div><div style="flex:1;display:flex;flex-direction:column;gap:2px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#8a8a93">REDUCERS</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#22c7f0">affect_camera</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#22c7f0">clear_monitor</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#22c7f0">start_sequence</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#22c7f0">apply_scenario</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#22c7f0">ack_alarm</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#22c7f0">report_status</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#8a8a93">PLANIFIÉS</p>
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;color:#f0d58c">sequence_tick</p>
+</div></div></div></div>
+<p class="fragment rise" data-fragment-index="5" style="font-size:32px;line-height:1.4;color:#a8a8b0">Plus de bus, plus de hub, plus d’API : <span style="color:#f2f2f3">chaque client lit par abonnement et écrit par reducer.</span></p>
+</div>
+<aside class="notes">Même architecture que TransVille. Les grains Orleans deviennent des tables relationnelles et des reducers. RabbitMQ, MassTransit et le hub SignalR disparaissent : la passerelle OPC et l'UI s'abonnent directement aux tables. Ce qui parle au matériel devient un client Spacetime comme les autres : le logiciel des décodeurs s'abonne directement aux moniteurs qu'il pilote, lance le flux, puis confirme par un reducer. L'agent monitoring fait ses pings et SNMP et publie l'état via report_status. Les timers Orleans des séquences deviennent un reducer planifié.</aside>
+</section>

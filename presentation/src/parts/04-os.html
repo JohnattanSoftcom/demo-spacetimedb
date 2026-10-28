@@ -1,0 +1,36 @@
+<section id="slide-os" data-transition="fade">
+  <style>
+    #slide-os .fragment.drop { transform:translateY(-40px); transition:opacity .45s ease, transform .5s cubic-bezier(.3,1.4,.5,1); }
+    #slide-os .fragment.drop.visible { transform:none; }
+    #slide-os .stdb.visible { animation: os-glow 1.6s ease-out .4s 1 forwards; }
+    @keyframes os-glow { 0% { box-shadow:0 0 0 rgba(157,133,255,0); } 40% { box-shadow:0 0 36px rgba(157,133,255,.55); } 100% { box-shadow:0 0 14px rgba(157,133,255,.25); } }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:56px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">L’analogie · 04</p>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;letter-spacing:2px;text-transform:uppercase;color:#8a8a93">Pourquoi une app mono-poste reste simple</p>
+      <h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-1.5px;color:#f2f2f3">Votre OS abstrait le matériel. Spacetime abstrait le cloud.</h2>
+    </div>
+    <div style="display:flex;flex-direction:row;gap:64px">
+      <div style="flex:1;display:flex;flex-direction:column;gap:20px">
+        <p class="fragment" data-fragment-index="0" style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#8a8a93">Application mono-poste</p>
+        <div style="display:flex;flex-direction:column">
+          <p class="fragment drop" data-fragment-index="2" style="background:#1a1a1f;border:1px solid #3a3a42;border-radius:8px 8px 0 0;padding:32px 40px;font-size:36px;line-height:1.3;color:#f2f2f3">Votre programme</p>
+          <p class="fragment drop" data-fragment-index="1" style="background:#141418;border:1px solid #3a3a42;border-top:none;padding:32px 40px;font-size:36px;line-height:1.3;color:#c9c9cf">Système d’exploitation</p>
+          <p class="fragment drop" data-fragment-index="0" style="background:#0d0d10;border:1px solid #3a3a42;border-top:none;border-radius:0 0 8px 8px;padding:32px 40px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.4;letter-spacing:1px;text-transform:uppercase;color:#8a8a93">CPU · mémoire · disque · carte réseau</p>
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:20px">
+        <p class="fragment" data-fragment-index="0" style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Application multi-utilisateur</p>
+        <div style="display:flex;flex-direction:column">
+          <p class="fragment drop" data-fragment-index="2" style="background:#0f2418;border:1px solid #1f5136;border-radius:8px 8px 0 0;padding:32px 40px;font-size:36px;line-height:1.3;color:#f2f2f3">Votre module : tables et reducers</p>
+          <p class="stdb fragment drop" data-fragment-index="1" style="background:#221c38;border:1px solid #3b2f66;border-top:none;padding:32px 40px;font-size:36px;line-height:1.3;color:#f2f2f3">Spacetime</p>
+          <p class="fragment drop" data-fragment-index="0" style="background:#0d0d10;border:1px solid #3a3a42;border-top:none;border-radius:0 0 8px 8px;padding:32px 40px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.4;letter-spacing:1px;text-transform:uppercase;color:#8a8a93">Stockage · calcul · réseau · réplication</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Une analogie. Une application mono-poste reste simple parce que l'OS abstrait le matériel : CPU, mémoire, disque, réseau. Pour une application multi-utilisateur, Spacetime joue ce rôle : il abstrait le stockage, le calcul, le réseau et la réplication. Vous écrivez seulement votre module, avec vos tables et vos reducers.</aside>
+</section>

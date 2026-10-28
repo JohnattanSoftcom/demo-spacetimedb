@@ -1,0 +1,50 @@
+<section id="slide-auth" data-transition="fade">
+  <style>
+    #slide-auth .arrow { flex:none; width:48px; height:24px; }
+    #slide-auth .frame p { font-variant-ligatures:none; }
+    #slide-auth .card4.visible { animation: auth-glow 1.2s ease-out forwards; }
+    @keyframes auth-glow { 0% { box-shadow:0 0 0 #4ade8000; } 40% { box-shadow:0 0 48px #4ade8066; } 100% { box-shadow:0 0 18px #4ade8026; } }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:40px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Authentification · 11</p>
+    <h2 style="font-family:'Inter', Arial, sans-serif;font-size:56px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#f2f2f3">L’identité vient d’un jeton OpenID Connect, vérifié par la base</h2>
+    <div style="display:flex;flex-direction:row;align-items:center;gap:20px">
+      <div class="fragment rise" data-fragment-index="0" style="flex:1;display:flex;flex-direction:column;gap:12px;background:#16161a;border:1px solid #2a2a31;border-radius:8px;padding:28px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;color:#9d85ff">01 · ÉMISSION</p>
+        <p style="font-size:32px;font-weight:600;line-height:1.2;color:#f2f2f3">Fournisseur d’identité</p>
+        <p style="font-size:26px;line-height:1.4;color:#a8a8b0">Keycloak, Auth0, Google ou SpacetimeAuth émet un jeton JWT.</p>
+      </div>
+      <svg class="arrow fragment grow-x" data-fragment-index="1" viewBox="0 0 48 24"><path d="M0 8H32V0L48 12L32 24V16H0Z" fill="#5c5c66"/></svg>
+      <div class="fragment rise" data-fragment-index="1" style="flex:1;display:flex;flex-direction:column;gap:12px;background:#16161a;border:1px solid #2a2a31;border-radius:8px;padding:28px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;color:#f07a86">02 · CONNEXION</p>
+        <p style="font-size:32px;font-weight:600;line-height:1.2;color:#f2f2f3">Client</p>
+        <p style="font-size:26px;line-height:1.4;color:#a8a8b0">Le client ouvre la connexion WebSocket avec ce jeton.</p>
+      </div>
+      <svg class="arrow fragment grow-x" data-fragment-index="2" viewBox="0 0 48 24"><path d="M0 8H32V0L48 12L32 24V16H0Z" fill="#5c5c66"/></svg>
+      <div class="fragment rise" data-fragment-index="2" style="flex:1;display:flex;flex-direction:column;gap:12px;background:#16161a;border:1px solid #2a2a31;border-radius:8px;padding:28px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;color:#22c7f0">03 · VÉRIFICATION</p>
+        <p style="font-size:32px;font-weight:600;line-height:1.2;color:#f2f2f3">Spacetime</p>
+        <p style="font-size:26px;line-height:1.4;color:#a8a8b0">Vérifie la signature et dérive l’Identity de l’émetteur et du sujet.</p>
+      </div>
+      <svg class="arrow fragment grow-x" data-fragment-index="3" viewBox="0 0 48 24"><path d="M0 8H32V0L48 12L32 24V16H0Z" fill="#5c5c66"/></svg>
+      <div class="card4 fragment rise" data-fragment-index="3" style="flex:1;display:flex;flex-direction:column;gap:12px;background:#0f2418;border:1px solid #1f5136;border-radius:8px;padding:28px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;color:#4ade80">04 · AUTORISATION</p>
+        <p style="font-size:32px;font-weight:600;line-height:1.2;color:#f2f2f3">Votre reducer</p>
+        <p style="font-size:26px;line-height:1.4;color:#a8a8b0">ctx.Sender donne l’identité, ctx.SenderAuth.Jwt les claims.</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:row;gap:40px">
+      <div class="fragment rise" data-fragment-index="4" style="flex:1;display:flex;flex-direction:column;gap:16px;background:#09090b;border:1px solid #202026;border-radius:8px;padding:32px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#5c5c66">Reducer ClientConnected : refuser les autres émetteurs</p>
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;color:#e6e6ea"><span style="color:#b9a6ff">var</span> auth = ctx.SenderAuth;<br><span style="color:#b9a6ff">if</span> (!auth.HasJwt || auth.Jwt?.Issuer != <span style="color:#f0c674">"https://sso.client.ch/realms/transport"</span>)<br>&#160;&#160;&#160;&#160;<span style="color:#b9a6ff">throw new</span> <span style="color:#22c7f0">Exception</span>(<span style="color:#f0c674">"Fournisseur d’identité non autorisé"</span>);</p>
+      </div>
+      <div class="fragment rise" data-fragment-index="5" style="width:500px;display:flex;flex-direction:column;gap:12px;justify-content:center;border-left:1px solid #2a2a31;padding:0 0 0 40px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Sans jeton</p>
+        <p style="font-size:28px;line-height:1.4;color:#a8a8b0">La base émet une identité anonyme. C’est ce qu’utilise la démo : une identité par onglet.</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Le parcours d’une identité, en quatre étapes. Un fournisseur OpenID Connect (Keycloak, Auth0, Google ou SpacetimeAuth) émet un jeton JWT ; le client ouvre sa connexion WebSocket avec ce jeton ; Spacetime vérifie la signature et en dérive une Identity stable. Dans le reducer, ctx.Sender donne cette identité et ctx.SenderAuth.Jwt les claims. On peut refuser les émetteurs inconnus dès ClientConnected. Sans jeton, la base crée une identité anonyme : c’est ce que fait la démo, une identité par onglet.</aside>
+</section>

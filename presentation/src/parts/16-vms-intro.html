@@ -1,0 +1,22 @@
+<section id="slide-vms-intro" data-transition="fade">
+  <style>
+    #slide-vms-intro .chips.visible p { animation: vi-chip .45s cubic-bezier(.3,1.6,.5,1) both; }
+    #slide-vms-intro .chips.visible p:nth-child(2) { animation-delay:.12s; }
+    #slide-vms-intro .chips.visible p:nth-child(3) { animation-delay:.24s; }
+    @keyframes vi-chip { from { opacity:0; transform:scale(.8); } to { opacity:1; transform:none; } }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:44px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:radial-gradient(ellipse at 50% 45%, #0f2418 0%, #0d0d10 70%);border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">VMS-VD · 16</p>
+    <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:28px;letter-spacing:4px;text-transform:uppercase;color:#4ade80;text-align:center">Un projet qu’on connaît · OFROU / UTII</p>
+    <h1 style="font-family:'Inter', Arial, sans-serif;font-size:140px;font-weight:600;line-height:1.02;letter-spacing:-5px;color:#f2f2f3;text-align:center">Et pour VMS-VD ?</h1>
+    <p class="fragment rise" data-fragment-index="0" style="font-size:36px;line-height:1.4;color:#a8a8b0;text-align:center;width:1400px">La vidéo des routes nationales N01, N05, N09 et N12. Un cas précis pour mesurer le gain : affecter une caméra à un moniteur.</p>
+    <div class="chips fragment" data-fragment-index="0" style="display:flex;flex-direction:row;gap:20px;justify-content:center">
+      <p style="background:#183a4a;border:1px solid #24576e;border-radius:4px;padding:16px 28px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;letter-spacing:2px;text-transform:uppercase;color:#5cc8f2">16 murs d’images</p>
+      <p style="background:#221c38;border:1px solid #3b2f66;border-radius:4px;padding:16px 28px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;letter-spacing:2px;text-transform:uppercase;color:#b9a6ff">≈ 120 moniteurs</p>
+      <p style="background:#33191d;border:1px solid #5a2a31;border-radius:4px;padding:16px 28px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;letter-spacing:2px;text-transform:uppercase;color:#f3b0b8">5 centres</p>
+    </div>
+  </div>
+  <aside class="notes">Après la démo, appliquons le même raisonnement à un projet que tout le monde ici connaît : le VMS vaudois. Il pilote les murs d'images de la VMZ-CH à Emmen, de la police cantonale et des centres d'entretien de la Blécherette, Rennaz et Yverdon. Plutôt que de tout comparer, on va zoomer sur l’action la plus courante : affecter une caméra à un moniteur, et la suivre de bout en bout. L'idée n'est pas de dire qu'on a mal fait : les choix de l'époque (Orleans, Galera, RabbitMQ) étaient raisonnables. C'est de montrer combien de plomberie on aurait pu éviter.</aside>
+</section>

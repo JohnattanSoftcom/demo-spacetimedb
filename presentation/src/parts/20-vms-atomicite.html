@@ -1,0 +1,19 @@
+<section id="slide-vms-atomicite" data-transition="fade">
+<style>
+#slide-vms-atomicite .glow.visible { animation:atm-glow 1.6s ease-out .3s backwards; }
+@keyframes atm-glow { 0%{box-shadow:0 0 0 0 rgba(74,222,128,.5)} 100%{box-shadow:0 0 0 28px rgba(74,222,128,0)} }
+</style>
+<div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:48px">
+<div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+<svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+<p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Le fond du problème · 20</p>
+<div style="display:flex;flex-direction:column;gap:16px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;letter-spacing:2px;text-transform:uppercase;color:#8a8a93">Limite technique ou choix de conception ?</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:56px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#f2f2f3">Le bon design devient le comportement par défaut</h2>
+</div>
+<div style="display:flex;flex-direction:row;gap:32px">
+<div class="fragment rise" data-fragment-index="0" style="flex:1;display:flex;flex-direction:column;gap:24px;padding:48px;background:#1c1214;border:1px solid #4a2a30;border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#f07a86">Orleans</p><p style="font-size:40px;font-weight:600;line-height:1.35;color:#f2f2f3">Avec Orleans, l’atomicité entre moniteurs est un effort explicite (transactions, saga, redécoupage) que le projet n’a pas fait.</p></div><div class="fragment rise glow" data-fragment-index="1" style="flex:1;display:flex;flex-direction:column;gap:24px;padding:48px;background:#0f2418;border:1px solid #1f5136;border-radius:8px"><p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Spacetime</p><p style="font-size:40px;font-weight:600;line-height:1.35;color:#f2f2f3">Avec Spacetime, c’est le comportement par défaut : un reducer est une transaction, et la séparation intention / effet est imposée, puisqu’un reducer ne peut pas faire d’appel réseau.</p></div>
+</div>
+</div>
+<aside class="notes">Pour anticiper la question des collègues qui connaissent Orleans : oui, Orleans 3.2 savait faire de l’atomique. Il y a les transactions distribuées (ITransactionalState et l’attribut Transaction), une saga, ou un redécoupage avec un grain par mur qui possède tous ses moniteurs. Le projet n’utilise aucune de ces options : ce n’est donc pas une impossibilité, c’est un effort qui n’a pas été fait parce que le modèle acteur rend le chemin non atomique plus naturel. Et une partie reste impossible partout : on ne fait pas de rollback d’un décodeur physique. Ce qu’on peut rendre atomique, c’est l’état voulu ; les appareils sont ensuite réconciliés. Spacetime impose précisément ce découpage.</aside>
+</section>

@@ -1,0 +1,36 @@
+<section id="slide-rls" data-transition="fade">
+  <style>
+    #slide-rls table { width:100%; margin:0; border-collapse:collapse; border-spacing:0; }
+    #slide-rls th, #slide-rls td { text-align:left; font-weight:400; padding:14px 12px 14px 0; border-bottom:1px solid #1a1a1f; line-height:1.4; }
+    #slide-rls tr:last-child td { border-bottom:none; }
+    #slide-rls tr.out td.c { color:#f2f2f3; transition:color .7s ease; }
+    #slide-rls .frame:has(.f-filter.visible) tr.out td.c { color:#45454d; }
+    #slide-rls .tablebox { position:relative; overflow:hidden; }
+    #slide-rls .scan { position:absolute; left:0; top:0; width:100%; height:6px; background:linear-gradient(90deg,#4ade8000,#4ade80,#4ade8000); box-shadow:0 0 24px #4ade80; opacity:0; pointer-events:none; }
+    #slide-rls .frame:has(.f-filter.visible) .scan { animation: rls-scan 1.1s ease-in-out forwards; }
+    @keyframes rls-scan { 0% { top:0; opacity:0; } 10% { opacity:1; } 90% { opacity:1; } 100% { top:100%; opacity:0; } }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:36px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Sécurité · 13</p>
+    <h2 style="font-family:'Inter', Arial, sans-serif;font-size:56px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#f2f2f3">Chaque client ne reçoit que les lignes auxquelles il a droit</h2>
+    <div style="display:flex;flex-direction:row;align-items:center;justify-content:space-between;gap:32px">
+      <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#8a8a93">Messages du PCC, vus par le chauffeur du Bus 101</p>
+      <p class="f-filter fragment pop" data-fragment-index="0" style="background:#09090b;border:1px solid #1f5136;border-radius:4px;padding:10px 16px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#4ade80">DriverMessage.ToDriver.Filter(ctx.Sender)</p>
+    </div>
+    <div class="tablebox" style="background:#09090b;border:1px solid #202026;border-radius:8px;padding:16px 32px">
+      <div class="scan"></div>
+      <table style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#f2f2f3">
+        <tr><th style="width:8%;color:#5c5c66">id</th><th style="width:16%;color:#5c5c66">pour</th><th style="width:56%;color:#5c5c66">message</th><th style="width:20%;color:#5c5c66">reçu ?</th></tr>
+        <tr><td>41</td><td>Bus 101</td><td>Déviation rue de Romont, suivez la ligne 2</td><td class="fragment" data-fragment-index="1" style="color:#4ade80">oui</td></tr>
+        <tr class="out"><td class="c">42</td><td class="c">Bus 201</td><td class="c">Retour au dépôt après le service</td><td class="fragment" data-fragment-index="1" style="color:#a0525c">non, filtré</td></tr>
+        <tr><td>43</td><td>Bus 101</td><td>Contrôle des billets à Fribourg, Gare</td><td class="fragment" data-fragment-index="1" style="color:#4ade80">oui</td></tr>
+        <tr class="out"><td class="c">44</td><td class="c">Bus 301</td><td class="c">Dépanneuse en route vers Guintzet</td><td class="fragment" data-fragment-index="1" style="color:#a0525c">non, filtré</td></tr>
+        <tr class="out"><td class="c">45</td><td class="c">Bus 202</td><td class="c">Retard de 6 min, informez les voyageurs</td><td class="fragment" data-fragment-index="1" style="color:#a0525c">non, filtré</td></tr>
+        <tr><td>46</td><td>Bus 101</td><td>Fin de service à 18 h 30</td><td class="fragment" data-fragment-index="1" style="color:#4ade80">oui</td></tr>
+      </table>
+    </div>
+  </div>
+  <aside class="notes">Voici la table des messages envoyés par le PCC à tous les chauffeurs. Sans filtre, tout le monde verrait tout. On déclare un filtre côté module : DriverMessage.ToDriver.Filter(ctx.Sender). La base l’évalue pour chaque client : le chauffeur du Bus 101 ne reçoit que les messages 41, 43 et 46. Les autres lignes ne quittent jamais le serveur ; ce n’est pas un filtrage côté client.</aside>
+</section>

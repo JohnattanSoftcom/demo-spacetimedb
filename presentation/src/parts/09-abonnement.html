@@ -1,0 +1,63 @@
+<section id="slide-abonnement" data-transition="fade">
+  <style>
+    #slide-abonnement .row { margin:-4px -12px; padding:4px 12px; border-radius:6px; }
+    #slide-abonnement .row.visible { animation: ab-flash 1.4s ease-out .15s 1 forwards; }
+    #slide-abonnement .row.del.visible { animation-name: ab-flash-red; }
+    @keyframes ab-flash { 0% { background:rgba(34,199,240,0); } 25% { background:rgba(34,199,240,.18); } 100% { background:rgba(34,199,240,0); } }
+    @keyframes ab-flash-red { 0% { background:rgba(240,122,134,0); } 25% { background:rgba(240,122,134,.2); } 100% { background:rgba(240,122,134,0); } }
+    #slide-abonnement .live { display:inline-block; width:14px; height:14px; margin-left:16px; border-radius:50%; background:#4ade80; vertical-align:middle; }
+    #slide-abonnement .step.visible .live { animation: ab-live 1.4s ease-in-out infinite; }
+    @keyframes ab-live { 0%,100% { box-shadow:0 0 0 0 rgba(74,222,128,.6); } 50% { box-shadow:0 0 0 10px rgba(74,222,128,0); } }
+    #slide-abonnement .step { position:relative; }
+    #slide-abonnement .step::before { content:''; position:absolute; left:-22px; top:0; bottom:0; width:3px; border-radius:2px; background:#4ade80; opacity:0; transition:opacity .4s ease; }
+    #slide-abonnement .step.current-fragment::before { opacity:1; }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:40px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Abonnements · 09</p>
+    <h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-1.5px;color:#f2f2f3">Un abonnement, c’est du SQL qui reste ouvert</h2>
+    <div style="display:flex;flex-direction:row;gap:56px">
+      <div style="flex:1;display:flex;flex-direction:column;gap:20px;background:#09090b;border:1px solid #202026;border-radius:8px;padding:40px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#5c5c66">Borne d’arrêt · Fribourg, Gare</p>
+        <p class="fragment" data-fragment-index="0" style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:32px;line-height:1.4;color:#4ade80"><span style="color:#b9a6ff">SELECT</span> * <span style="color:#b9a6ff">FROM</span> stop_eta<br><span style="color:#b9a6ff">WHERE</span> stop_id = 5</p>
+        <div class="fragment grow-x" data-fragment-index="0" style="border-top:1px solid #202026"></div>
+        <div class="row fragment rise" data-fragment-index="1" style="display:flex;flex-direction:row;align-items:center;gap:20px">
+          <p style="width:150px;text-align:center;background:#12301f;border-radius:4px;padding:6px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#4ade80">INSERT</p>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#c9c9cf">Ligne 1 · Bus 101 · 4 min</p>
+        </div>
+        <div class="row fragment rise" data-fragment-index="2" style="display:flex;flex-direction:row;align-items:center;gap:20px">
+          <p style="width:150px;text-align:center;background:#0f2a33;border-radius:4px;padding:6px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#22c7f0">UPDATE</p>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#c9c9cf">Ligne 1 · Bus 101 · 3 min</p>
+        </div>
+        <div class="row fragment rise" data-fragment-index="3" style="display:flex;flex-direction:row;align-items:center;gap:20px">
+          <p style="width:150px;text-align:center;background:#12301f;border-radius:4px;padding:6px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#4ade80">INSERT</p>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#c9c9cf">Ligne 2 · Bus 201 · 6 min</p>
+        </div>
+        <div class="row fragment rise" data-fragment-index="4" style="display:flex;flex-direction:row;align-items:center;gap:20px">
+          <p style="width:150px;text-align:center;background:#0f2a33;border-radius:4px;padding:6px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#22c7f0">UPDATE</p>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#c9c9cf">Ligne 1 · Bus 101 · à l’approche</p>
+        </div>
+        <div class="row del fragment rise" data-fragment-index="5" style="display:flex;flex-direction:row;align-items:center;gap:20px">
+          <p style="width:150px;text-align:center;background:#33191d;border-radius:4px;padding:6px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#f07a86">DELETE</p>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;color:#c9c9cf">Ligne 1 · Bus 101 · parti</p>
+        </div>
+      </div>
+      <div style="width:560px;display:flex;flex-direction:column;justify-content:center;gap:40px">
+        <div class="step fragment rise" data-fragment-index="1" style="display:flex;flex-direction:column;gap:8px">
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;color:#4ade80">01</p>
+          <p style="font-size:30px;line-height:1.4;color:#f2f2f3">La base évalue la requête et envoie les lignes.</p>
+        </div>
+        <div class="step fragment rise" data-fragment-index="2" style="display:flex;flex-direction:column;gap:8px">
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;color:#4ade80">02<span class="live"></span></p>
+          <p style="font-size:30px;line-height:1.4;color:#f2f2f3">Elle garde la connexion ouverte.</p>
+        </div>
+        <div class="step fragment rise" data-fragment-index="3" style="display:flex;flex-direction:column;gap:8px">
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;color:#4ade80">03</p>
+          <p style="font-size:30px;line-height:1.4;color:#f2f2f3">Elle pousse chaque changement, et seulement ce qui change.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Un abonnement, c'est une requête SQL qui reste ouverte. La borne de Fribourg Gare s'abonne à SELECT * FROM stop_eta WHERE stop_id = 5. La base évalue la requête et envoie les lignes initiales. Ensuite elle garde la connexion ouverte. Et à chaque commit, elle calcule quelles requêtes sont touchées et pousse uniquement les lignes qui changent : insert, update, delete. Le client n'a jamais besoin de re-interroger.</aside>
+</section>

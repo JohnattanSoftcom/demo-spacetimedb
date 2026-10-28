@@ -1,0 +1,42 @@
+<section id="slide-code-table" data-transition="fade">
+  <style>
+    #slide-code-table .hl { background:rgba(74,222,128,.13); border-left:4px solid #4ade80; border-radius:4px; }
+    #slide-code-table .box { border:2px dashed rgba(157,133,255,.75); border-radius:6px; background:rgba(157,133,255,.05); }
+    #slide-code-table .note { position:relative; }
+    #slide-code-table .note::before { content:''; position:absolute; left:-22px; top:0; bottom:0; width:3px; border-radius:2px; background:#4ade80; opacity:0; transition:opacity .4s ease; }
+    #slide-code-table .hl.visible:not(.current-fragment), #slide-code-table .box.visible:not(.current-fragment) { opacity:.45; }
+    #slide-code-table .note.current-fragment::before { opacity:1; }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:40px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Tables · 06</p>
+<h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-1.5px;color:#f2f2f3">Une table, c’est une struct C# annotée</h2>
+<div style="display:flex;flex-direction:row;gap:48px">
+<div style="flex:1;display:flex;flex-direction:column;gap:24px;background:#09090b;border:1px solid #202026;border-radius:8px;padding:40px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#5c5c66">spacetimedb/Lib.cs</p>
+<div class="codewrap" style="position:relative">
+<div class="hl fragment grow-x" data-fragment-index="0" style="position:absolute;left:-16px;right:-16px;top:-2px;height:43px"></div>
+<div class="hl fragment grow-x" data-fragment-index="1" style="position:absolute;left:-16px;right:-16px;top:115px;height:160px"></div>
+<div class="box fragment grow-x" data-fragment-index="2" style="position:absolute;left:-16px;right:-16px;top:37px;height:355px"></div>
+<p style="position:relative;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:26px;line-height:1.5;color:#e6e6ea"><span style="color:#4ade80">[SpacetimeDB.Table(Accessor = </span><span style="color:#f0c674">"DriverAssignment"</span><span style="color:#4ade80">, Public = true)]</span><br><span style="color:#b9a6ff">public partial struct</span> <span style="color:#22c7f0">DriverAssignment</span><br>{<br>&#160;&#160;&#160;&#160;<span style="color:#4ade80">[PrimaryKey]</span><br>&#160;&#160;&#160;&#160;<span style="color:#b9a6ff">public</span> <span style="color:#22c7f0">uint</span> VehicleId;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;<span style="color:#5c5c66">// un chauffeur par bus</span><br>&#160;&#160;&#160;&#160;<span style="color:#4ade80">[Unique]</span><br>&#160;&#160;&#160;&#160;<span style="color:#b9a6ff">public</span> <span style="color:#22c7f0">Identity</span> DriverIdentity;&#160;&#160;<span style="color:#5c5c66">// un bus par chauffeur</span><br>&#160;&#160;&#160;&#160;<span style="color:#b9a6ff">public</span> <span style="color:#22c7f0">string</span> DriverName;<br>&#160;&#160;&#160;&#160;<span style="color:#b9a6ff">public</span> <span style="color:#22c7f0">Timestamp</span> ClaimedAt;<br>}</p>
+</div>
+</div>
+<div style="width:420px;display:flex;flex-direction:column;gap:36px;justify-content:center">
+<div class="note fragment rise" data-fragment-index="0" style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Public = true</p>
+<p style="font-size:28px;line-height:1.4;color:#a8a8b0">Les clients peuvent s’y abonner. Sans ce flag, la table est privée.</p>
+</div>
+<div class="note fragment rise" data-fragment-index="1" style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">PrimaryKey + Unique</p>
+<p style="font-size:28px;line-height:1.4;color:#a8a8b0">La règle « un bus, un chauffeur » est garantie par le schéma.</p>
+</div>
+<div class="note fragment rise" data-fragment-index="2" style="display:flex;flex-direction:column;gap:8px">
+<p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Pas d’ORM, pas de DTO</p>
+<p style="font-size:28px;line-height:1.4;color:#a8a8b0">La même struct sert au stockage et aux types générés côté client.</p>
+</div>
+</div>
+</div>
+  </div>
+  <aside class="notes">Une table, c'est simplement une struct C# annotée. Public = true permet aux clients de s'y abonner ; sans ce flag, la table reste privée. PrimaryKey et Unique garantissent la règle « un bus, un chauffeur » directement dans le schéma. Et pas d'ORM ni de DTO : la même struct sert au stockage et aux types générés côté client.</aside>
+</section>

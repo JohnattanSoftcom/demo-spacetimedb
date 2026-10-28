@@ -1,0 +1,34 @@
+<section id="slide-origine" data-transition="fade">
+  <style>
+    #slide-origine .card p.line { opacity:0; }
+    #slide-origine .card.visible p.line { animation: origine-in .5s ease-out forwards; }
+    #slide-origine .card.visible p.line:nth-of-type(2) { animation-delay:.05s; }
+    #slide-origine .card.visible p.line:nth-of-type(3) { animation-delay:.3s; }
+    #slide-origine .card.visible p.line:nth-of-type(4) { animation-delay:.55s; }
+    @keyframes origine-in { from { opacity:0; transform:translateX(-16px); } to { opacity:1; transform:none; } }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:48px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">L’origine · 02</p>
+    <div style="display:flex;flex-direction:column;gap:20px">
+      <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.4;letter-spacing:2px;text-transform:uppercase;color:#8a8a93">BitCraft, un MMO où le monde entier est modifiable</p>
+      <h2 style="font-family:'Inter', Arial, sans-serif;font-size:64px;font-weight:600;line-height:1.1;letter-spacing:-1.5px;color:#f2f2f3">Un studio de 40 personnes a dû réinventer le backend pour construire un MMO</h2>
+    </div>
+    <div style="display:flex;flex-direction:row;gap:32px">
+      <div class="card fragment rise" data-fragment-index="0" style="flex:1;display:flex;flex-direction:column;gap:24px;background:#1c1214;border:1px solid #4a2a30;border-radius:8px;padding:48px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#f07a86">Un MMORPG, d’habitude</p>
+        <p class="line" style="font-size:44px;font-weight:600;line-height:1.2;color:#f2f2f3">Des centaines de développeurs</p>
+        <p class="line" style="font-size:44px;font-weight:600;line-height:1.2;color:#f2f2f3">5 à 7 ans de développement</p>
+        <p class="line" style="font-size:44px;font-weight:600;line-height:1.2;color:#f2f2f3">Des centaines de millions de dollars</p>
+      </div>
+      <div class="card fragment rise" data-fragment-index="1" style="flex:1;display:flex;flex-direction:column;gap:24px;background:#0f2418;border:1px solid #1f5136;border-radius:8px;padding:48px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#4ade80">BitCraft, chez Clockwork Labs</p>
+        <p class="line" style="font-size:44px;font-weight:600;line-height:1.2;color:#f2f2f3">Une poignée d’ingénieurs</p>
+        <p class="line" style="font-size:44px;font-weight:600;line-height:1.2;color:#f2f2f3">Un backend simplifié à l’extrême</p>
+        <p class="line" style="font-size:44px;font-weight:600;line-height:1.2;color:#f2f2f3">Tout tourne dans Spacetime</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Spacetime vient de Clockwork Labs, le studio qui développe BitCraft, un MMO où tout le monde est modifiable. D'habitude, un MMORPG demande des centaines de développeurs, cinq à sept ans et des centaines de millions. Eux ont une poignée d'ingénieurs : ils ont simplifié le backend à l'extrême et tout le jeu tourne dans Spacetime.</aside>
+</section>

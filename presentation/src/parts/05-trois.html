@@ -1,0 +1,59 @@
+<section id="slide-trois" data-transition="fade">
+  <style>
+    #slide-trois .pillar.visible .tile { animation: trois-tile 1.2s ease-out .2s 1 forwards; }
+    #slide-trois .pillar:nth-of-type(1) { --c:#9d85ff; }
+    #slide-trois .pillar:nth-of-type(2) { --c:#4ade80; }
+    #slide-trois .pillar:nth-of-type(3) { --c:#f07a86; }
+    #slide-trois .pillar.visible .tile svg { animation: trois-ico 1.2s ease-out .2s 1 forwards; }
+    @keyframes trois-tile { 0% { box-shadow:0 0 0 transparent; } 40% { box-shadow:0 0 28px var(--c); border-color:var(--c); } 100% { box-shadow:0 0 0 transparent; border-color:var(--c); } }
+    @keyframes trois-ico { to { color:var(--c); } }
+  </style>
+  <div class="frame" style="display:flex; flex-direction:column; gap:56px; padding:176px 160px 112px; background:#050506">
+    <div style="position:absolute; top:96px; left:48px; width:1824px; height:936px; display:flex; flex-direction:column; background:#0d0d10; border:1px solid #202026; border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute; top:34px; left:1172px; width:700px; font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; line-height:1.5; letter-spacing:2px; text-align:right; text-transform:uppercase; color:#4ade80">Le modèle · 05</p>
+  <div style="display:flex; flex-direction:column; gap:20px">
+    <p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; line-height:1.4; letter-spacing:2px; text-transform:uppercase; color:#8a8a93">Tout le reste en découle</p>
+    <h2 style="font-family:Inter, Arial, sans-serif; font-size:64px; font-weight:600; line-height:1.1; letter-spacing:-1.5px; color:#f2f2f3">Trois piliers fondamentaux</h2>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:28px">
+    <div class="pillar fragment rise" data-fragment-index="0" style="display:flex; flex-direction:row; gap:56px; align-items:center">
+      <div style="width:640px; display:flex; flex-direction:row; gap:28px; align-items:center; padding:28px; background:#16161a; border:1px solid #2a2a31; border-radius:8px">
+        <div class="tile" style="width:80px; height:80px; display:flex; flex-direction:row; align-items:center; justify-content:center; background:#050506; border:1px solid #2a2a31; border-radius:6px">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px; height:40px; color:#f2f2f3"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px">
+          <p style="font-family:Inter, Arial, sans-serif; font-size:40px; font-weight:600; line-height:1.2; color:#f2f2f3">Tables</p>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; letter-spacing:2px; text-transform:uppercase; color:#9d85ff">Stockage transactionnel</p>
+        </div>
+      </div>
+      <p style="flex:1; font-family:Inter, Arial, sans-serif; font-size:32px; line-height:1.4; color:#a8a8b0">Le schéma, déclaré dans le code comme avec un ORM. Relationnel, en mémoire, avec journal persistant.</p>
+    </div>
+    <div class="pillar fragment rise" data-fragment-index="1" style="display:flex; flex-direction:row; gap:56px; align-items:center">
+      <div style="width:640px; display:flex; flex-direction:row; gap:28px; align-items:center; padding:28px; background:#16161a; border:1px solid #2a2a31; border-radius:8px">
+        <div class="tile" style="width:80px; height:80px; display:flex; flex-direction:row; align-items:center; justify-content:center; background:#050506; border:1px solid #2a2a31; border-radius:6px">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px; height:40px; color:#f2f2f3"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px">
+          <p style="font-family:Inter, Arial, sans-serif; font-size:40px; font-weight:600; line-height:1.2; color:#f2f2f3">Reducers</p>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; letter-spacing:2px; text-transform:uppercase; color:#4ade80">Calcul côté serveur</p>
+        </div>
+      </div>
+      <p style="flex:1; font-family:Inter, Arial, sans-serif; font-size:32px; line-height:1.4; color:#a8a8b0">Des fonctions transactionnelles : validation, droits, règles métier. Tout réussit, ou rien n’est écrit.</p>
+    </div>
+    <div class="pillar fragment rise" data-fragment-index="2" style="display:flex; flex-direction:row; gap:56px; align-items:center">
+      <div style="width:640px; display:flex; flex-direction:row; gap:28px; align-items:center; padding:28px; background:#16161a; border:1px solid #2a2a31; border-radius:8px">
+        <div class="tile" style="width:80px; height:80px; display:flex; flex-direction:row; align-items:center; justify-content:center; background:#050506; border:1px solid #2a2a31; border-radius:6px">
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:40px; height:40px; color:#f2f2f3"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:4px">
+          <p style="font-family:Inter, Arial, sans-serif; font-size:40px; font-weight:600; line-height:1.2; color:#f2f2f3">Abonnements</p>
+          <p style="font-family:'JetBrains Mono', 'Courier New', monospace; font-size:24px; letter-spacing:2px; text-transform:uppercase; color:#f07a86">Réseau temps réel</p>
+        </div>
+      </div>
+      <p style="flex:1; font-family:Inter, Arial, sans-serif; font-size:32px; line-height:1.4; color:#a8a8b0">Du SQL côté client. Le résultat arrive, puis chaque changement est poussé en continu.</p>
+    </div>
+  </div>
+  </div>
+  <aside class="notes">Tout Spacetime repose sur trois piliers. Les tables : le schéma déclaré dans le code, relationnel, en mémoire avec un journal persistant. Les reducers : des fonctions transactionnelles côté serveur, où tout réussit ou rien n'est écrit. Les abonnements : le client écrit du SQL, reçoit le résultat, puis chaque changement lui est poussé en continu.</aside>
+</section>

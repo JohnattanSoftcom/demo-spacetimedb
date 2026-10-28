@@ -1,0 +1,81 @@
+<section id="slide-clients" data-transition="fade">
+  <style>
+    #slide-clients .card.fragment.visible:nth-of-type(2) { transition-delay:.12s; }
+    #slide-clients .card.fragment.visible:nth-of-type(3) { transition-delay:.24s; }
+    #slide-clients .card.fragment.visible:nth-of-type(4) { transition-delay:.36s; }
+    #slide-clients .card.fragment.visible:nth-of-type(5) { transition-delay:.48s; }
+    #slide-clients .dash line { stroke-dasharray:8 8; }
+    #slide-clients .dash.visible line { animation: cl-flow 1.2s linear infinite; }
+    @keyframes cl-flow { to { stroke-dashoffset:-16; } }
+    #slide-clients .arrow.fragment { transition:none; }
+    #slide-clients .arrow line { stroke-dasharray:1; stroke-dashoffset:1; }
+    #slide-clients .arrow polygon { opacity:0; }
+    #slide-clients .arrow.visible line { animation: cl-draw .6s ease-out forwards; }
+    #slide-clients .arrow.visible polygon { animation: cl-fade .2s ease-out .55s forwards; }
+    @keyframes cl-draw { to { stroke-dashoffset:0; } }
+    @keyframes cl-fade { to { opacity:1; } }
+    #slide-clients .packet { opacity:0; }
+    #slide-clients .packet.visible { animation: cl-packet 1.6s ease-in-out .6s infinite; }
+    @keyframes cl-packet {
+      0% { opacity:0; transform:translate(0,0); }
+      12% { opacity:1; }
+      85% { opacity:1; }
+      100% { opacity:0; transform:translate(572px,126px); }
+    }
+    /* final / print mode: no looping packet frozen mid-path */
+    html.final #slide-clients .packet { display:none; }
+    #slide-clients .callbox.visible { animation: cl-glow 1.4s ease-out .2s 1 forwards; }
+    @keyframes cl-glow { 0% { box-shadow:0 0 0 rgba(74,222,128,0); } 40% { box-shadow:0 0 32px rgba(74,222,128,.5); } 100% { box-shadow:0 0 10px rgba(74,222,128,.15); } }
+  </style>
+  <div class="frame" style="background:#050506;color:#f2f2f3;font-family:'Inter', Arial, sans-serif;padding:176px 160px 112px;display:flex;flex-direction:column;gap:40px">
+    <div style="position:absolute;left:48px;top:96px;width:1824px;height:936px;background:#0d0d10;border:1px solid #202026;border-radius:12px"></div>
+    <svg class="st-logo" role="img" aria-label="Spacetime" viewBox="0 0 133 32" style="position:absolute;left:52px;top:34px;width:150px;height:36px"><use href="#st-brand"/></svg>
+    <p style="position:absolute;left:1172px;top:34px;width:700px;text-align:right;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;line-height:1.5;letter-spacing:2px;text-transform:uppercase;color:#4ade80">Les clients · 08</p>
+    <h2 style="font-family:'Inter', Arial, sans-serif;font-size:56px;font-weight:600;line-height:1.1;letter-spacing:-1.2px;color:#f2f2f3">Les clients se connectent à la base et appellent les reducers comme des fonctions</h2>
+    <div style="position:relative;width:1600px;height:620px">
+      <svg class="dash fragment" data-fragment-index="0" style="position:absolute;left:0;top:0;width:1600px;height:620px" width="1600" height="620" viewBox="0 0 1600 620">
+        <g stroke="#3a3a42" stroke-width="2" fill="none">
+          <line x1="500" y1="52" x2="1080" y2="300"/>
+          <line x1="500" y1="292" x2="1080" y2="300"/>
+          <line x1="500" y1="412" x2="1080" y2="300"/>
+          <line x1="500" y1="532" x2="1080" y2="300"/>
+        </g>
+      </svg>
+      <svg class="arrow fragment" data-fragment-index="1" style="position:absolute;left:0;top:0;width:1600px;height:620px" width="1600" height="620" viewBox="0 0 1600 620">
+        <line x1="500" y1="172" x2="1064.4" y2="296.6" pathLength="1" stroke="#4ade80" stroke-width="3" fill="none"/>
+        <polygon points="1080,300 1062.9,303.4 1065.9,289.7" fill="#4ade80"/>
+      </svg>
+      <div class="card fragment pop" data-fragment-index="0" style="position:absolute;left:0px;top:10px;width:500px;display:flex;flex-direction:row;align-items:center;gap:20px;background:#2a1519;border:1px solid #5a2a31;border-radius:6px;padding:20px">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f07a86;width:40px;height:40px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <p style="font-size:28px;color:#f3c2c8">Superviseur · PCC</p>
+      </div>
+      <div class="card fragment pop" data-fragment-index="0" style="position:absolute;left:0px;top:130px;width:500px;display:flex;flex-direction:row;align-items:center;gap:20px;background:#2a1519;border:2px solid #4ade80;border-radius:6px;padding:20px">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f07a86;width:40px;height:40px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <p style="font-size:28px;color:#f3c2c8">Chauffeur · Bus 101</p>
+      </div>
+      <div class="card fragment pop" data-fragment-index="0" style="position:absolute;left:0px;top:250px;width:500px;display:flex;flex-direction:row;align-items:center;gap:20px;background:#2a1519;border:1px solid #5a2a31;border-radius:6px;padding:20px">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f07a86;width:40px;height:40px"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <p style="font-size:28px;color:#f3c2c8">Chauffeur · Bus 201</p>
+      </div>
+      <div class="card fragment pop" data-fragment-index="0" style="position:absolute;left:0px;top:370px;width:500px;display:flex;flex-direction:row;align-items:center;gap:20px;background:#2a1519;border:1px solid #5a2a31;border-radius:6px;padding:20px">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f07a86;width:40px;height:40px"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <p style="font-size:28px;color:#f3c2c8">Borne · Fribourg, Gare</p>
+      </div>
+      <div class="card fragment pop" data-fragment-index="0" style="position:absolute;left:0px;top:490px;width:500px;display:flex;flex-direction:row;align-items:center;gap:20px;background:#2a1519;border:1px solid #5a2a31;border-radius:6px;padding:20px">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#f07a86;width:40px;height:40px"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        <p style="font-size:28px;color:#f3c2c8">Borne · Pérolles</p>
+      </div>
+      <div style="position:absolute;left:1080px;top:150px;width:520px;display:flex;flex-direction:column;gap:24px;background:#050506;border:1px solid #2a2a31;border-radius:8px;padding:32px">
+        <p style="font-size:32px;font-weight:600;color:#f2f2f3">Spacetime</p>
+        <p style="background:#6d4aff;border-radius:4px;padding:16px 20px;font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:1px;color:#ffffff">Module C# · WebAssembly</p>
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:1px;text-transform:uppercase;color:#8a8a93">Tables · reducers · abonnements</p>
+      </div>
+      <div class="packet fragment" data-fragment-index="1" style="position:absolute;left:492px;top:164px;width:16px;height:16px;border-radius:50%;background:#4ade80;box-shadow:0 0 18px 4px rgba(74,222,128,.7)"></div>
+      <div class="callbox fragment rise" data-fragment-index="2" style="position:absolute;left:1080px;top:470px;width:520px;display:flex;flex-direction:column;gap:8px;background:#09090b;border:1px solid #1f5136;border-radius:6px;padding:20px">
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;letter-spacing:2px;text-transform:uppercase;color:#8a8a93">Appel de reducer</p>
+        <p style="font-family:'JetBrains Mono', 'Courier New', monospace;font-size:24px;color:#4ade80">claimVehicle({ vehicleId: 101 })</p>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Côté client, il n'y a pas d'API REST à écrire. Chaque application, le superviseur du PCC, les chauffeurs, les bornes d'arrêt, ouvre une connexion WebSocket directement vers la base. Quand le chauffeur du bus 101 prend son véhicule, il appelle le reducer comme une fonction : claimVehicle avec vehicleId 101. Le SDK généré gère la sérialisation et l'authentification.</aside>
+</section>

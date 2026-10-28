@@ -1,0 +1,16 @@
+</div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/notes/notes.min.js"></script>
+<script>
+  const FINAL = /[?&]final/.test(location.search);
+  if (FINAL) document.documentElement.classList.add('final');
+  Reveal.initialize({
+    width:1920, height:1080, margin:0, minScale:0.1, maxScale:2,
+    center:false, hash:true, transition:'fade', backgroundTransition:'fade',
+    slideNumber:'c/t', controls:true, progress:true, plugins:[RevealNotes]
+  }).then(() => {
+    if (FINAL) document.querySelectorAll('.reveal .fragment').forEach(f => f.classList.add('visible'));
+  });
+</script>
+</body>
+</html>
